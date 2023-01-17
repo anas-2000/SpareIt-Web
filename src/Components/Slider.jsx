@@ -86,7 +86,7 @@ height: 80%;
 `; */
 const Image = styled.img`
 height: 80%;
-width: 78%;
+width: 80%;
 `;
 
 /* const Title = styled.h1`

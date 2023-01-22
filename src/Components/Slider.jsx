@@ -5,11 +5,12 @@ import { useState } from "react"
 import { SliderItems } from "../data"
 
 const Container = styled.div`
-width: 80%;
-height:100vh;
+width: 100%;
+height:90vh;
 display: flex;
 position: relative;
 //background-color: #D91438;
+//background-color: #8C1C3A;
 overflow: hidden;
 margin-left: auto;
 margin-right: auto;
@@ -73,7 +74,7 @@ flex:1;
 `; */
 const ImgContainer = styled.div`
 height: 100%;
-//width: inherit;
+//width: 100%;
 flex:1;
 `;
 

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { useState } from "react"
 import { categories } from '../data';
 import CategoryItem from './CategoryItem';
-import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined'
-import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined'
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 
 const Container = styled.div`
@@ -17,22 +17,21 @@ const Container = styled.div`
     
 `;
 const Title = styled.h1`
-  font-family: 'Oswald', sans-serif;
-  font-weight: 400;
+  font-weight: 700;
   text-align: center;
   ::before,::after{
     content:" ";
     width:10px;
     height:10px;
+    margin-bottom: 7px;
     border-radius:50%;
     background: red;
     display:inline-block;
   }
 `
 
-const FeatureText = styled.h3`
-    font-family: 'Oswald', sans-serif;
-    font-weight: 300;
+const FeatureText = styled.h4`
+    font-weight: 500;
     color: red;
     text-align: center;
 `
@@ -40,27 +39,27 @@ const FeatureText = styled.h3`
 const Arrow = styled.div`
 width: 50px;
 height: 50px;
-background-color: #fff7f7; 
+background-color: white; 
 border-radius: 50%;
 display:flex;
 align-items:center;
 justify-content: center;
 position: absolute;
-top: 0;
+top: 50px;
 bottom: 0;
 margin: auto;
 cursor: pointer;
-opacity: 0.5;
+//opacity: 0.5;
 z-index: 2;
 &:hover{
-    background-color: white;
+    //background-color: red;
     zoom: 1.05;
 }
 //using props
 // If the value of the direction prop is "left" we will set the left value to be 10px;
 // If the value of the direction prop is "right" we will set the right value to be 10px;
-left: ${props => props.direction === "left" && "120px"};
-right: ${props => props.direction === "right" && "120px"};
+left: ${props => props.direction === "left" && "10px"};
+right: ${props => props.direction === "right" && "10px"};
 `;
 const Wrapper = styled.div`
 //height: 100%;
@@ -149,10 +148,10 @@ const Categories = () => {
   } */
   return (
     <Container>
-      <FeatureText> Top Featured Collections </FeatureText>
-      <Title> Shop by Categories </Title>
+      <FeatureText> TOP FEATURED COLLECTIONS </FeatureText>
+      <Title> SHOP BY CATEGORIES </Title>
       <Arrow direction = "left" onClick={()=>handleClick("left")} /*passing props to our styled component. direction is a prop. we are passing the value "left to it" */ >  
-        <ArrowLeftOutlinedIcon/>
+      <ArrowBackIosNewIcon sx={{color: "red", backgroundColor: "white"}}/>
       </Arrow>
      <Wrapper startIndex = {startIndex}>
         {/* {categories.slice(startIndex, endIndex).map((item) => (
@@ -164,7 +163,7 @@ const Categories = () => {
         ))}
      </Wrapper>
       <Arrow direction="right" onClick={()=>handleClick("right")}>
-          <ArrowRightOutlinedIcon />
+      <ArrowForwardIosIcon sx={{color: "red", backgroundColor: "white"}} />
       </Arrow>  
     </Container>
   )

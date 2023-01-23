@@ -13,6 +13,7 @@ const Container = styled.div`
     }
     background-color: white;
     outline: 1px solid #fff7f7;
+    //outline: 0.5px solid red;
     //background-color: #8C1C3A;
     //background-color: #6b1004;
     

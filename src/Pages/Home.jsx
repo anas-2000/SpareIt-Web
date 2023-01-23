@@ -12,7 +12,8 @@ const Home = () => {
         <Navbar />
         <Slider />
         <Categories />
-    </Box>    
+    </Box>  
+    
   )
 }
 

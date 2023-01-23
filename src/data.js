@@ -76,7 +76,7 @@ export const categories= [
         img:"https://webstockreview.net/images/clipart-car-headlight-17.png",
         // img:"https://cdn-icons-png.flaticon.com/128/7825/7825227.png",
         //img: "https://cdn.pixabay.com/photo/2022/05/17/17/14/car-7203265_960_720.jpg",
-        title: "Lights and Electrical"
+        title: "Lights & Electrical"
 
     },
     {
@@ -84,7 +84,7 @@ export const categories= [
         img:"https://th.bing.com/th/id/R.8298866d0a8146f8d6391766d46933ea?rik=A2R%2bwAUdVjNQow&pid=ImgRaw&r=0",
         // img: "https://cdn-icons-png.flaticon.com/512/9322/9322821.png",
         //img:"https://cdn.pixabay.com/photo/2022/05/17/17/14/car-7203265_960_720.jpg",
-        title: "Oil and Lubricants"
+        title: "Oil & Lubricants"
     },
     {
         id: 8,

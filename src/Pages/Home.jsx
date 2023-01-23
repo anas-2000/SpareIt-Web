@@ -3,6 +3,7 @@ import Navbar from '../Components/Navbar'
 import { Box } from '@mui/material'
 import Announcements from '../Components/Announcements'
 import Slider from '../Components/Slider'
+import Categories from '../Components/Categories'
 
 const Home = () => {
   return (
@@ -10,7 +11,9 @@ const Home = () => {
         <Announcements/>
         <Navbar />
         <Slider />
-    </Box>
+        <Categories />
+    </Box>  
+    
   )
 }
 

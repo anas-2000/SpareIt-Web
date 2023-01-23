@@ -1,18 +1,21 @@
 import styled from "styled-components"
-import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined'
-import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined'
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useState } from "react"
 import { SliderItems } from "../data"
+import { mobile } from "../responsive";
 
 const Container = styled.div`
-width: 80%;
-height:100vh;
+width: 100%;
+height:90vh;
 display: flex;
 position: relative;
 //background-color: #D91438;
+//background-color: #8C1C3A;
 overflow: hidden;
-margin-left: auto;
-margin-right: auto;
+/* margin-left: auto;
+margin-right: auto;  */
+${mobile({ display: "none" })}
 `;
 
 const Wrapper = styled.div`
@@ -26,7 +29,7 @@ transform: translateX(${props => props.slideIndex * -100}vw);
 const Arrow = styled.div`
 width: 50px;
 height: 50px;
-background-color: #fff7f7; 
+background-color: white; 
 border-radius: 50%;
 display:flex;
 align-items:center;
@@ -36,7 +39,7 @@ top: 0;
 bottom: 0;
 margin: auto;
 cursor: pointer;
-opacity: 0.5;
+//opacity: 0.5;
 z-index: 2;
 &:hover{
     background-color: white;
@@ -63,7 +66,7 @@ width: 100vw;
 height: 100vh;
 display: flex;
 align-items: center;
-justify-content: center;
+
 `;
 
 /* const ImgContainer = styled.div`
@@ -73,7 +76,8 @@ flex:1;
 `; */
 const ImgContainer = styled.div`
 height: 100%;
-//width: inherit;
+//width: 100%;
+
 flex:1;
 `;
 
@@ -85,8 +89,10 @@ padding: 50px;
 height: 80%;
 `; */
 const Image = styled.img`
-height: 80%;
-width: 80%;
+height: 90%;
+width: 100%;
+//width: 100%;
+
 `;
 
 /* const Title = styled.h1`
@@ -114,7 +120,7 @@ const Slider = () => {
     return (
     <Container>
         <Arrow direction = "left" onClick={()=>handleClick("left")} /*passing props to our styled component. direction is a prop. we are passing the value "left to it" */ >  
-            <ArrowLeftOutlinedIcon/>
+            <ArrowBackIosNewIcon sx={{color: "red", backgroundColor: "white"}}/>
         </Arrow>
        {/*  <Wrapper>
             <Slide>
@@ -133,7 +139,7 @@ const Slider = () => {
           ))}
           </Wrapper>
           <Arrow direction="right" onClick={()=>handleClick("right")}>
-              <ArrowRightOutlinedIcon />
+              <ArrowForwardIosIcon sx={{color: "red", backgroundColor: "white"}} />
           </Arrow>  
     </Container>
   )

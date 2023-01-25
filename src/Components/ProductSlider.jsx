@@ -1,41 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useState } from "react"
-//import { categories } from '../data';
-import CategoryItem from './ProductItem';
+import ProductItem from './ProductItem';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ProductSlider from './ProductSlider';
 
 
 const Container = styled.div`
-    //display: flex;
-    padding: 20px;
-    position: relative;
-    justify-content: space-between;
-    background-color: #f5f5f5;
-    overflow: hidden;
     
 `;
-const Title = styled.h1`
-  font-weight: 700;
-  text-align: center;
-  ::before,::after{
-    content:" ";
-    width:10px;
-    height:10px;
-    margin-bottom: 7px;
-    border-radius:50%;
-    background: red;
-    display:inline-block;
-  }
-`
-
-const FeatureText = styled.h4`
-    font-weight: 500;
-    color: red;
-    text-align: center;
-`
 
 const Arrow = styled.div`
 width: 50px;
@@ -73,10 +46,10 @@ transform: translateX(${props => props.startIndex * -20}vw);
 `;
 
 
-const Categories = ({items}) => {
+const ProductSlider = ({items}) => {
   const num = 5; 
   const [startIndex, setStartIndex] = useState(0); 
-  const [endIndex, setEndIndex] = useState(num); 
+
   const rem = items.length % num;
 
   const handleClick = (direction) => {
@@ -149,11 +122,23 @@ const Categories = ({items}) => {
   } */
   return (
     <Container>
-      <FeatureText> TOP FEATURED COLLECTIONS </FeatureText>
-      <Title> SHOP BY CATEGORIES </Title>
-      <ProductSlider items={items} />
+      <Arrow direction = "left" onClick={()=>handleClick("left")} /*passing props to our styled component. direction is a prop. we are passing the value "left to it" */ >  
+      <ArrowBackIosNewIcon sx={{color: "red", backgroundColor: "white"}}/>
+      </Arrow>
+     <Wrapper startIndex = {startIndex}>
+        {/* {categories.slice(startIndex, endIndex).map((item) => (
+          <CategoryItem item = {item} />  
+        ))} */}
+
+        {items.map((item) => (
+            <ProductItem item = {item} />  
+        ))}
+     </Wrapper>
+      <Arrow direction="right" onClick={()=>handleClick("right")}>
+      <ArrowForwardIosIcon sx={{color: "red", backgroundColor: "white"}} />
+      </Arrow>  
     </Container>
   )
 }
 
-export default Categories
+export default ProductSlider

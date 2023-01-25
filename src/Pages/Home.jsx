@@ -4,6 +4,7 @@ import { Box } from '@mui/material'
 import Announcements from '../Components/Announcements'
 import Slider from '../Components/Slider'
 import Categories from '../Components/Categories'
+import Catalog from '../Components/Catalog'
 
 import { categories } from '../data'
 import ProductSlider from '../Components/ProductSlider'
@@ -14,7 +15,8 @@ const Home = () => {
         <Announcements/>
         <Navbar />
         <Slider />
-        <Categories items={categories} />
+        <Categories />
+        <Catalog />
     </Box>  
     
   )

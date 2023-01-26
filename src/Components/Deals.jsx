@@ -3,9 +3,6 @@ import { deals } from '../products';
 import styled from 'styled-components'
 import ItemCard from './ItemCard';
 import { useState } from 'react';
-import { ButtonGroup } from '@mui/material';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -24,23 +21,19 @@ const Container = styled.div`
 const Header = styled.div`
     border-bottom: 1px solid lightgray;
     height: 50px;
-    /* margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px; */
     display: flex;
     margin-bottom: 1px;
-    background-color: white;
+    background-color: #fafafa;
     align-items: center;
     justify-content: space-evenly;
 `;
 const Title = styled.h3`
-  /* font-weight: 700;
-  text-align: left; */
 `;
 
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 const Arrow = styled.div`
@@ -53,19 +46,14 @@ align-items:center;
 justify-content: center;
 position: absolute;
 outline: 1px solid #c4b3b343;
-//top: 50px;
-//bottom: 0;
 margin: auto;
 cursor: pointer;
-//opacity: 0.5;
 z-index: 2;
 &:hover{
 }
-//using props
-// If the value of the direction prop is "left" we will set the left value to be 10px;
-// If the value of the direction prop is "right" we will set the right value to be 10px;
-left: ${props => props.direction === "left" && "305px"};
+//left: ${props => props.direction === "left" && "305px"};
 right: ${props => props.direction === "right" && "10px"};
+right: ${props => props.direction === "left" && "50px"};
 `;
 
 const Deals = () => {
@@ -74,6 +62,13 @@ const Deals = () => {
     const itemsperpage = 1;
 
     const handleClick = (direction) =>{
+
+      if(startIndex === deals.length - 1){
+        setStartIndex(0);
+      }
+      else{
+        setStartIndex(startIndex + itemsperpage);
+      }
 
     }
 

@@ -8,34 +8,41 @@ const Container = styled.div`
     margin-right: 20px;
     margin-bottom: 20px;
     margin-top: 0px; */
-    height: 70vh;
+    height: 90vh;
     position: relative;
     background-color: white;
     outline: 1px solid #fff7f7;
 `;
 
 const Image = styled.img`
-  height: 80%;
+  height: 70%;
   width: 90%;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
   object-fit: contain;
 `;
 
 const Info = styled.div`
+    height: 30%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     flex-direction: column;
     margin-left: 10px;
 `;
 
-const Title = styled.h3`
+const Title = styled.h4`
     //font-weight: 500;
     flex: 1;
+    flex-direction: column;
+    margin-bottom: 20px;
 `;
 
 const Price = styled.h4`
-font-weight: 500;
-flex: 1;
+  font-weight: 500;
+  flex: 1;
+  position: relative;
 `;
 
 

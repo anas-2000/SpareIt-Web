@@ -43,10 +43,11 @@ const Info = styled.div`
     flex-direction: column;
 `;
 const Title = styled.h3`
-    //font-weight: 500;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
 `;
 
-const CategoryItem = ({item}) => {
+const ProductItem = ({item}) => {
   return (
     <Container>
         <Image src={item.img} />
@@ -59,4 +60,4 @@ const CategoryItem = ({item}) => {
   )
 }
 
-export default CategoryItem
+export default ProductItem

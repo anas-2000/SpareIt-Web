@@ -43,7 +43,6 @@ const Info = styled.div`
     flex-direction: column;
 `;
 const Title = styled.h3`
-    //font-weight: 500;
 `;
 
 const CategoryItem = ({item}) => {

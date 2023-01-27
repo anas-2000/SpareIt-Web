@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useState } from "react"
-import ProductItem from './CategoryItem';
+import CategoryItem from './CategoryItem';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -130,11 +130,11 @@ const CategorySlider = ({items}) => {
         ))} */}
 
         {items.map((item) => (
-            <ProductItem item = {item} />  
+            <CategoryItem item = {item} />  
         ))}
      </Wrapper>
       <Arrow direction="right" onClick={()=>handleClick("right")}>
-        <ArrowForwardIosIcon sx={{color: "red", backgroundColor: "white"}} />
+      <ArrowForwardIosIcon sx={{color: "red", backgroundColor: "white"}} />
       </Arrow>  
     </Container>
   )

@@ -1,7 +1,7 @@
-import { isTemplateElement } from '@babel/types'
 import React from 'react'
 import styled from 'styled-components'
 import ProductCard from './ProductCard'
+import { products } from '../products'
 
 
 const Container = styled.div`

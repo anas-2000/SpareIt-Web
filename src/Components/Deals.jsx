@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 import { deals } from '../products';
 import styled from 'styled-components'
 import ItemCard from './ItemCard';

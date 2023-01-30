@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { products } from '../products';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import { Button } from '@mui/material';
+
 
 
 const Info = styled.div`

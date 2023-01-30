@@ -4,6 +4,7 @@ import { products } from '../products';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { Button } from '@mui/material';
 
 
 const Info = styled.div`
@@ -19,33 +20,31 @@ const Info = styled.div`
     align-items: center;
     justify-content: center;
     transition: all 0.5s ease;
+    cursor: pointer;
 `;
 
 
 const Container = styled.div`
     flex: 1;
     margin: 5px;
-    min-width: 280px;
+    //min-width: 280px;
+    min-width: 24%;
+    max-width: 24%;
     height: 350px; 
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid #c4b3b343;
     &:hover ${Info} {
         opacity: 1;
     }
 `;
-
-// const Circle = styled.div`
-//     width: 200px;
-//     height: 200px;
-//     border-radius: 50%;
-//     background-color: white;
-//     position: absolute;
-// `;
 const Image = styled.img`
     height: 75%;
+    width: 90%;
     z-index: 2;
 `;
 
@@ -66,10 +65,21 @@ const Icon = styled.div`
     }
 `;
 
+const CardFooter = styled.div`
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #c4b3b343;
+`
+
+const Title = styled.h4`  
+    padding-top: 20px;
+    font-weight: 500;
+`;
+
+
 const ProductCard = ({product}) => {
   return (
     <Container>
-        {/* <Circle /> */}
         <Image src = {product.img[0]} />
         <Info>
             <Icon>
@@ -82,6 +92,9 @@ const ProductCard = ({product}) => {
                 <FavoriteBorderOutlinedIcon />
             </Icon>
         </Info>
+        <CardFooter>
+            <Title> {product.title}</Title>
+        </CardFooter>
     </Container>
   )
 }

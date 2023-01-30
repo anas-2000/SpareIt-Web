@@ -105,7 +105,7 @@ export const categories= [
         img: "https://www.eonon.co.uk/UserFiles/image/new_ga7202/eonon-vw-android-car-stereo.png",
         // img: "https://cdn-icons-png.flaticon.com/512/9464/9464298.png",
         //img: "https://images.pexels.com/photos/3738982/pexels-photo-3738982.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        title:"Audio Video"
+        title:"Audio & Video"
     },
     {
         id: 11,

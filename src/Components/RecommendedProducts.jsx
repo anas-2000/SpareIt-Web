@@ -53,6 +53,7 @@ margin: auto;
 cursor: pointer;
 z-index: 2;
 &:hover{
+  background-color: red;
 }
 //left: ${props => props.direction === "left" && "305px"};
 right: ${props => props.direction === "right" && "10px"};
@@ -63,6 +64,28 @@ right: ${props => props.direction === "left" && "50px"};
 const RecommendedProducts = () => {
   const [startIndex, setStartIndex] = useState(0);
   const itemsperpage = 1;
+  const [leftarrowColor, setLeftArrowColor] = useState("gray");
+  const [rightarrowColor, setRightArrowColor] = useState("gray");
+
+  const mouseEnter = (direction) => {
+    if(direction==="left"){
+      setLeftArrowColor("white");
+    }
+    else{
+      setRightArrowColor("white");
+    }
+    
+  };
+  
+  const mouseLeave = (direction) => {
+    if(direction === "left"){
+      setLeftArrowColor("gray");
+    }
+    else{
+      setRightArrowColor("gray");
+    }
+    
+  };
 
   const handleClick = (direction) =>{
 
@@ -73,16 +96,18 @@ const RecommendedProducts = () => {
       setStartIndex(startIndex + itemsperpage);
     }
 
-  }
+  };
   return (
     <Container>
     <Header>
     <Title> JUST FOR YOU </Title>
-    <Arrow direction = "left" onClick={()=>handleClick("left")} /*passing props to our styled component. direction is a prop. we are passing the value "left to it" */ >  
-      <ArrowBackIosNewIcon fontSize='small' sx={{color: "gray", backgroundColor: "white"}}/>
+    <Arrow direction = "left" onClick={()=>handleClick("left")}  onMouseEnter={()=> mouseEnter("left")}
+      onMouseLeave ={()=>mouseLeave("left")} /*passing props to our styled component. direction is a prop. we are passing the value "left to it" */ >  
+      <ArrowBackIosNewIcon fontSize='small' sx={{color: leftarrowColor}}/>
     </Arrow>
-    <Arrow direction="right" onClick={()=>handleClick("right")}>
-      <ArrowForwardIosIcon fontSize='small' sx={{color: "gray", backgroundColor: "white"}} />
+    <Arrow direction="right" onClick={()=>handleClick("right")}   onMouseEnter={()=> mouseEnter("right")}
+      onMouseLeave ={()=>mouseLeave("right")}>
+      <ArrowForwardIosIcon fontSize='small' sx={{color: rightarrowColor}} />
     </Arrow>
     </Header>
     <Wrapper>

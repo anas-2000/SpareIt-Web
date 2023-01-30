@@ -7,6 +7,9 @@ import { products } from '../products'
 const Container = styled.div`
     padding: 20px;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+   // background-color: #f5f5f5;
 `
 
 const Products = () => {

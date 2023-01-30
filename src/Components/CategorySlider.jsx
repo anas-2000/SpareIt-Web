@@ -26,8 +26,9 @@ cursor: pointer;
 //opacity: 0.5;
 z-index: 2;
 &:hover{
-    //background-color: red;
-    zoom: 1.05;
+    background-color: red;
+    transform: scale(1.1);
+    
 }
 //using props
 // If the value of the direction prop is "left" we will set the left value to be 10px;
@@ -48,8 +49,30 @@ transform: translateX(${props => props.startIndex * -20}vw);
 const CategorySlider = ({items}) => {
   const num = 5; 
   const [startIndex, setStartIndex] = useState(0); 
-
   const rem = items.length % num;
+
+  const [leftarrowColor, setLeftArrowColor] = useState("red");
+    const [rightarrowColor, setRightArrowColor] = useState("red");
+
+    const mouseEnter = (direction) => {
+        if(direction==="left"){
+        setLeftArrowColor("white");
+        }
+        else{
+        setRightArrowColor("white");
+        }
+        
+    };
+  
+    const mouseLeave = (direction) => {
+        if(direction === "left"){
+        setLeftArrowColor("red");
+        }
+        else{
+        setRightArrowColor("red");
+        }
+        
+    };
 
   const handleClick = (direction) => {
       if(direction === "left"){
@@ -121,8 +144,9 @@ const CategorySlider = ({items}) => {
   } */
   return (
     <Container>
-      <Arrow direction = "left" onClick={()=>handleClick("left")} /*passing props to our styled component. direction is a prop. we are passing the value "left to it" */ >  
-      <ArrowBackIosNewIcon sx={{color: "red", backgroundColor: "white"}}/>
+      <Arrow direction = "left" onClick={()=>handleClick("left")}  onMouseEnter={()=> mouseEnter("left")}
+        onMouseLeave ={()=>mouseLeave("left")}>
+          <ArrowBackIosNewIcon sx={{color: leftarrowColor}}/>
       </Arrow>
      <Wrapper startIndex = {startIndex}>
         {/* {categories.slice(startIndex, endIndex).map((item) => (
@@ -133,8 +157,9 @@ const CategorySlider = ({items}) => {
             <CategoryItem item = {item} />  
         ))}
      </Wrapper>
-      <Arrow direction="right" onClick={()=>handleClick("right")}>
-      <ArrowForwardIosIcon sx={{color: "red", backgroundColor: "white"}} />
+     <Arrow direction="right" onClick={()=>handleClick("right")}   onMouseEnter={()=> mouseEnter("right")}
+        onMouseLeave ={()=>mouseLeave("right")}>
+          <ArrowForwardIosIcon sx={{color: rightarrowColor}} />
       </Arrow>  
     </Container>
   )

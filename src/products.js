@@ -49,6 +49,82 @@ export const products = [
                 "https://cache1.pakwheels.com/ad_pictures/7636/car-back-rest-car-back-care-cushion-lumbar-support-black-76363174.webp",
                 "https://cache2.pakwheels.com/ad_pictures/7636/car-back-rest-car-back-care-cushion-lumbar-support-black-76363175.webp"
             ]
+    },
+    {
+        id: 4,
+        category: "Exterior",
+        subcategory: "Viper Blades",
+        manufacturer: "Honda",
+        vehicle:"BR-V",
+        vehiclemodel:["2017", "2018", "2019", "2020", "2021", "2022"],
+        title: "Honda BR-V 2017-2022 Silicone Wiper Blades",
+        price: 1000,
+        featured: false,
+        img: ["https://cache4.pakwheels.com/ad_pictures/6390/honda-br-v-2017-2022-silicone-wiper-blades-soft-rubber-vipers-graphite-coated-rubber-63902171.jpg"]
+    },
+    {
+        id: 5,
+        category: "Lights & Electrical",
+        subcategory: "LED Lights",
+        manufacturer: "Universal",
+        vehicle:"",
+        vehiclemodel: [],
+        title: "Universal Headlight DRL With Indicator",
+        price: 1700,
+        featured: false,
+        img: ["https://cache3.pakwheels.com/ad_pictures/5483/universal-headlight-drl-with-indicator-54833199.jpg"]
+    }, 
+    {
+        id: 6,
+        category: "Oil & Lubricants",
+        subcategory: "Engine Oil",
+        manufacturer:"ZIC",
+        vehicle:"",
+        vehiclemodel:[],
+        title:"Zic Engine Oil 0W-30 - 4 Litre",
+        price: 8000,
+        featured: false,
+        img: ["https://cache2.pakwheels.com/ad_pictures/4353/zic-engine-oil-0w-30-4-litre-43533830.jpg"]
+    }, 
+    {
+        id: 7,
+        category: "Tools & Gadgets",
+        subcategory: "Key Covers",
+        manufacturer: "",
+        vehicle:"Honda Civic",
+        vehiclemodel:["2016", "2017", "2018", "2019", "2020", "2021"],
+        title:"Honda Civic 2016-2021 Carbon Key Case",
+        price: 1800,
+        featured: false,
+        img: ["https://cache4.pakwheels.com/ad_pictures/5598/honda-civic-2016-2021-carbon-key-case-55985460.jpg"]
+    }, 
+    {
+        id:8,
+        category: "Tyres & Wheels",
+        subcategory: "Car Tyres",
+        manufacturer:"Nexen",
+        vehicle:"",
+        vehiclemodel:[],
+        title:"Nexen Tire Roadian HP 285/60R18",
+        price:  55500,
+        featured: false,
+        img: ["https://cache2.pakwheels.com/ad_pictures/5598/nexen-tire-roadian-hp-285-60r18-55986890.jpg",
+        "https://cache2.pakwheels.com/ad_pictures/5598/nexen-tire-roadian-hp-285-60r18-55986890.jpg",
+        "https://cache2.pakwheels.com/ad_pictures/5598/nexen-tire-roadian-hp-285-60r18-55986890.jpg",
+        "https://cache1.pakwheels.com/ad_pictures/5598/nexen-tire-roadian-hp-285-60r18-55986893.jpg"]
+    }, 
+    {
+        id: 9,
+        category:"Audio & Video",
+        subcategory:"Audio Accessories",
+        manufacturer:"",
+        vehicle:["Honda City", "Honda Grace", "Honda Vezel"],
+        vehiclemodel:[],
+        title:"Honda City 2022 Multimedia Steering Wheel",
+        featured: false,
+        img: ["https://cache2.pakwheels.com/ad_pictures/7488/honda-city-2022-multimedia-steering-wheel-buttons-keys-grace-audio-buttons-74884589.webp",
+        "https://cache4.pakwheels.com/ad_pictures/7488/honda-city-2022-multimedia-steering-wheel-buttons-keys-grace-audio-buttons-74884590.webp",
+        "https://cache2.pakwheels.com/ad_pictures/7488/honda-city-2022-multimedia-steering-wheel-buttons-keys-grace-audio-buttons-74884591.webp"]
     }
 ];
 

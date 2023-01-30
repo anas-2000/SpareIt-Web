@@ -51,6 +51,7 @@ margin: auto;
 cursor: pointer;
 z-index: 2;
 &:hover{
+  background-color: red;
 }
 right: ${props => props.direction === "right" && "10px"};
 right: ${props => props.direction === "left" && "50px"};
@@ -59,29 +60,54 @@ right: ${props => props.direction === "left" && "50px"};
 const FeaturedProducts = () => {
 
   const [startIndex, setStartIndex] = useState(0);
-    const itemsperpage = 1;
+  const itemsperpage = 1;
 
-    const handleClick = (direction) =>{
+  const [leftarrowColor, setLeftArrowColor] = useState("gray");
+  const [rightarrowColor, setRightArrowColor] = useState("gray");
 
-      if(startIndex === featuredProducts.length - 1){
-        setStartIndex(0);
-      }
-      else{
-        setStartIndex(startIndex + itemsperpage);
-      }
-
+  const mouseEnter = (direction) => {
+    if(direction==="left"){
+      setLeftArrowColor("white");
     }
+    else{
+      setRightArrowColor("white");
+    }
+    
+  };
+
+  const mouseLeave = (direction) => {
+    if(direction === "left"){
+      setLeftArrowColor("gray");
+    }
+    else{
+      setRightArrowColor("gray");
+    }
+    
+  };
+
+  const handleClick = (direction) =>{
+
+    if(startIndex === featuredProducts.length - 1){
+      setStartIndex(0);
+    }
+    else{
+      setStartIndex(startIndex + itemsperpage);
+    }
+
+  }
 
   return (
     <Container>
     <Header>
     <Title> FEATURED </Title>
-      <Arrow direction = "left" onClick={()=>handleClick("left")} /*passing props to our styled component. direction is a prop. we are passing the value "left to it" */ >  
-        <ArrowBackIosNewIcon fontSize='small' sx={{color: "gray", backgroundColor: "white"}}/>
-      </Arrow>
-      <Arrow direction="right" onClick={()=>handleClick("right")}>
-        <ArrowForwardIosIcon fontSize='small' sx={{color: "gray", backgroundColor: "white"}} />
-      </Arrow>
+    <Arrow direction = "left" onClick={()=>handleClick("left")}  onMouseEnter={()=> mouseEnter("left")}
+      onMouseLeave ={()=>mouseLeave("left")} /*passing props to our styled component. direction is a prop. we are passing the value "left to it" */ >  
+      <ArrowBackIosNewIcon fontSize='small' sx={{color: leftarrowColor}}/>
+    </Arrow>
+    <Arrow direction="right" onClick={()=>handleClick("right")}   onMouseEnter={()=> mouseEnter("right")}
+      onMouseLeave ={()=>mouseLeave("right")}>
+      <ArrowForwardIosIcon fontSize='small' sx={{color: rightarrowColor}} />
+    </Arrow>
     </Header>
     <Wrapper>
     {featuredProducts.slice(startIndex, startIndex+itemsperpage).map((product) => (

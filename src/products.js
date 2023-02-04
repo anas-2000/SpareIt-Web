@@ -108,6 +108,7 @@ export const products = [
         title:"Nexen Tire Roadian HP 285/60R18",
         price:  55500,
         featured: false,
+        desc:"This model offers a longer lasting tread life. The tire's tread wear rate is slowed down as the footprint maintains constant contact with the road and evenly distributes the driving pressure along the tread area. The constant contact equally spreads the force of acceleration, cornering and braking out across the tire’s surface and prevents irregular wear on the tire, extending its life.",
         img: ["https://cache2.pakwheels.com/ad_pictures/5598/nexen-tire-roadian-hp-285-60r18-55986890.jpg",
         "https://cache2.pakwheels.com/ad_pictures/5598/nexen-tire-roadian-hp-285-60r18-55986890.jpg",
         "https://cache2.pakwheels.com/ad_pictures/5598/nexen-tire-roadian-hp-285-60r18-55986890.jpg",

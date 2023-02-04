@@ -4,7 +4,7 @@ import Announcements from '../Components/Announcements';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Navbar';
 import Products from '../Components/Products';
-import { modelOptions , Options ,FetchData } from '../Utils/FetchData';
+import { Options ,FetchData } from '../Utils/FetchData';
 
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';

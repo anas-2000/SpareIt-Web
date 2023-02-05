@@ -6,13 +6,10 @@ import { TextField, Badge } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
-import Logo from '../assets/images/logo.png';
-import { red } from '@mui/material/colors';
+//import Logo from '../assets/images/logo.png';
 import { mobile } from "../responsive";
-//const Container = styled.div`height: 60px; background-color: white;`
-
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { red, blue } from '@mui/material/colors';
 
 
 const Container = styled.div`
@@ -24,6 +21,7 @@ padding: 10px 20px;
 display: flex;
 justify-content: space-between;
 align-items: center;
+${mobile({ padding: "10px 0px" })}
 `
 
 const Left = styled.div`
@@ -37,71 +35,70 @@ flex:1;
 align-items: center;
 justify-content: center;
 //min-width: 33.3333%;
-`
+`;
+
+const Logo = styled.h2`
+  font-weight: 600;
+  text-align: center;
+  ${mobile({ fontSize: "24px" })}
+`;
 const Right = styled.div`
 flex:1;
 display: flex;
 align-items: center;
 justify-content: flex-end;
+${mobile({ flex: 2, justifyContent: "center" })}
 //min-width: 33.3333%;
 `
 const MenuItem = styled.div`
 font-size: 14px;
 cursor:pointer;
 margin-left: 25px;
+${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `
 
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: red[800],
+        },
+        secondary: {
+            main: blue[500],
+        }
+    },
+});
 
 const Navbar = () => {
-  return (
-    <Container>
-        <Wrapper>
-            <Left>
-                  <TextField id="SearchField" variant='outlined' color='warning' size='small' placeholder='Search' InputProps={{
-                      endAdornment: (
-                          <InputAdornment position="end">
-                              <SearchIcon sx={{ color: red[500] }} />
-                          </InputAdornment>
-                      )
-                  }}></TextField>
-            </Left>
-            <Center>
-            <img src = {Logo} alt = "Logo" style = {{width: '100px', height: '60px/', margin: '0 20px'}} />
-            </Center>
-            <Right>
-                <MenuItem>Register</MenuItem>
-                <MenuItem>SignIn</MenuItem>
-                <MenuItem>
-                    <Badge badgeContent={4} color="primary">
-                        <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
-                    </Badge>
-                </MenuItem>
-            </Right>
-        </Wrapper>
-    </Container>
-
-    //  <Stack direction="row" justify-content="space-around" 
-    // sx={{gap: {sm: '122px', xs: '40px'}, mt: {sm : '32px', xs: '20px'}, justifyContent: 'center'}} px="20px">
-    //     <TextField id="SearchField" variant='outlined' color='warning' size='small' placeholder='Search' InputProps={{
-    //         endAdornment: (
-    //             <InputAdornment position="end">
-    //                 <SearchIcon color='warning'/>
-    //             </InputAdornment>
-    //         )
-    //     }}></TextField>
-    //     <Typography variant = "h4" fontWeight="bold" color="#d91438">Spare-IT</Typography>
-    //     <Stack direction="row" alignItems="center" justifyContent="flex-end">
-    //         <MenuItem>Register</MenuItem>
-    //         <MenuItem>SignIn</MenuItem>
-    //         <MenuItem>
-    //         <Badge badgeContent={4} color="primary">
-    //             <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
-    //         </Badge>
-    //         </MenuItem>
-    //     </Stack>
-        
-    // </Stack> 
-  )
+    return (
+        <ThemeProvider theme={theme}>
+            <Container>
+                <Wrapper>
+                    <Left>
+                        <TextField id="SearchField" variant='outlined'  size='small' placeholder='Search' InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <SearchIcon sx={{ color: red[800] }} />
+                                </InputAdornment>
+                            )
+                        }}></TextField>
+                    </Left>
+                    <Center>
+                        {/* <img src={Logo} alt="Logo" style={{ width: '100px', height: '60px/', margin: '0 20px' }} /> */}
+                        <Logo>SpareIT</Logo>
+                    </Center>
+                    <Right>
+                        <MenuItem>Register</MenuItem>
+                        <MenuItem>SignIn</MenuItem>
+                        <MenuItem>
+                            <Badge badgeContent={3} color="primary">
+                                <ShoppingCartOutlinedIcon color='primary'></ShoppingCartOutlinedIcon>
+                            </Badge>
+                        </MenuItem>
+                    </Right>
+                </Wrapper>
+            </Container>
+        </ThemeProvider>
+    );
 }
 
 export default Navbar

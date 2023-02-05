@@ -106,71 +106,71 @@ const Button = styled.button``; */
 
 
 const Slider = () => {
-  
-    const [slideIndex, setSlideIndex] = useState(0); 
+
+    const [slideIndex, setSlideIndex] = useState(0);
     const [leftarrowColor, setLeftArrowColor] = useState("red");
     const [rightarrowColor, setRightArrowColor] = useState("red");
 
     const mouseEnter = (direction) => {
-        if(direction==="left"){
-        setLeftArrowColor("white");
+        if (direction === "left") {
+            setLeftArrowColor("white");
         }
-        else{
-        setRightArrowColor("white");
+        else {
+            setRightArrowColor("white");
         }
-        
+
     };
-  
+
     const mouseLeave = (direction) => {
-        if(direction === "left"){
-        setLeftArrowColor("red");
+        if (direction === "left") {
+            setLeftArrowColor("red");
         }
-        else{
-        setRightArrowColor("red");
+        else {
+            setRightArrowColor("red");
         }
-        
+
     };
 
 
 
     //function to implement arrow button functionality
     const handleClick = (direction) => {
-        if(direction === "left"){
-            setSlideIndex(slideIndex > 0 ?  slideIndex - 1: SliderItems.length - 1); //if slide index > 0 decrement slide index by 1
+        if (direction === "left") {
+            setSlideIndex(slideIndex > 0 ? slideIndex - 1 : SliderItems.length - 1); //if slide index > 0 decrement slide index by 1
             // else go to the last slide       
         }
-        else{
-            setSlideIndex(slideIndex < SliderItems.length - 1 ? slideIndex + 1: 0);
+        else {
+            setSlideIndex(slideIndex < SliderItems.length - 1 ? slideIndex + 1 : 0);
         }
     }
     return (
-    <Container>
-        <Arrow direction = "left" onClick={()=>handleClick("left")}  onMouseEnter={()=> mouseEnter("left")}
-         onMouseLeave ={()=>mouseLeave("left")}>
-            <ArrowBackIosNewIcon sx={{color: leftarrowColor}}/>
-        </Arrow>
-       {/*  <Wrapper>
+        <Container>
+            <Arrow direction="left" onClick={() => handleClick("left")} onMouseEnter={() => mouseEnter("left")}
+                onMouseLeave={() => mouseLeave("left")}>
+                <ArrowBackIosNewIcon sx={{ color: leftarrowColor }} />
+            </Arrow>
+            {/*  <Wrapper>
             <Slide>
                 <ImgContainer>
                     <Image src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80" />
                 </ImgContainer>
             </Slide>
         </Wrapper> */}
-        <Wrapper slideIndex = {slideIndex}>
-            {SliderItems.map((item) =>(
-          <Slide>
-            <ImgContainer>
-                  <Image src={item.img} />
-              </ImgContainer>
-          </Slide>
-          ))}
-          </Wrapper>
-          <Arrow direction="right" onClick={()=>handleClick("right")}   onMouseEnter={()=> mouseEnter("right")}
-            onMouseLeave ={()=>mouseLeave("right")}>
-              <ArrowForwardIosIcon sx={{color: rightarrowColor}} />
-          </Arrow>  
-    </Container>
-  )
+            <Wrapper slideIndex={slideIndex}>
+                {SliderItems.map((item) => (
+                    <Slide>
+                        <ImgContainer>
+                            <Image src={item.img} />
+                        </ImgContainer>
+                    </Slide>
+                ))}
+            </Wrapper>
+            <Arrow direction="right" onClick={() => handleClick("right")} onMouseEnter={() => mouseEnter("right")}
+                onMouseLeave={() => mouseLeave("right")}>
+                <ArrowForwardIosIcon sx={{ color: rightarrowColor }} />
+            </Arrow>
+        </Container>
+    )
 }
 
 export default Slider

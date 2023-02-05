@@ -11,16 +11,25 @@ import Footer from '../Components/Footer'
 
 const Home = () => {
   return (
-    <Box width = "400px" sx={{width: { xl: '1488px'}}} m ="auto">
-        <Announcements/>
-        <Navbar />
-        <Slider />
-        <Categories />
-        <Catalog />
-        <Products />
-        <Footer />
-    </Box>  
-    
+    // <Box width = "400px" sx={{width: { xl: '1488px'}}} m ="auto">
+    //     <Announcements/>
+    //     <Navbar />
+    //     <Slider />
+    //     <Categories />
+    //     <Catalog />
+    //     <Products />
+    //     <Footer />
+    // </Box>  
+    <div>
+      <Announcements />
+      <Navbar />
+      <Slider />
+      <Categories />
+      <Catalog />
+      <Products />
+      <Footer />
+    </div>
+
   )
 }
 

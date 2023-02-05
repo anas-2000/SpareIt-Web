@@ -4,6 +4,7 @@ import { useState } from "react"
 import CategoryItem from './CategoryItem';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { mobile } from "../responsive";
 
 
 const Container = styled.div`
@@ -41,6 +42,7 @@ const Wrapper = styled.div`
 //width: inherit;
 display: flex;
 transform: translateX(${props => props.startIndex * -20}vw);
+${mobile({ padding: "0px"})}
 //transition: all 1.5s ease;
 //transform: translateX(${props => props.slideIndex * -100}vw);
 `;

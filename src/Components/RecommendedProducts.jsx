@@ -5,6 +5,7 @@ import { recommendedProducts } from '../products';
 import { useState } from 'react';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { mobile } from "../responsive";
 
 
 
@@ -27,10 +28,17 @@ const Header = styled.div`
     align-items: center;
     margin-bottom: 1px;
     justify-content: space-evenly;
+    ${mobile({
+    padding: "10px",
+    justifyContent: "flex-start",
+    alignItems:"center",
+    flexDirection:"column"
+    })}
 `;
 const Title = styled.h3`
-  /* font-weight: 700;
-  text-align: left; */
+  ${mobile({
+  flexDirection: "column",
+})}
 `;
 
 
@@ -58,6 +66,13 @@ z-index: 2;
 //left: ${props => props.direction === "left" && "305px"};
 right: ${props => props.direction === "right" && "10px"};
 right: ${props => props.direction === "left" && "50px"};
+
+${mobile({
+  position:"absolute  ",
+  right: props => props.direction === "right" && "10px",
+  right: props => props.direction === "left" && "50px",
+  top:"35px"
+})}
 `;
 
 

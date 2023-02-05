@@ -9,12 +9,12 @@ import Checkout from "./Pages/Checkout";
 
 
 const App = () => {
-   //return <Home />;
+   return <Home />;
    //return <Product />
    //return <SignUp />
    //return <LogIn />
    //return <ShoppingCart />
-   return <Checkout />
+   //return <Checkout />
 };
 
 export default App;

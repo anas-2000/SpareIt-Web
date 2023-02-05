@@ -8,11 +8,11 @@ import ShoppingCart from "./Pages/ShoppingCart"
 
 
 const App = () => {
-   //return <Home/>;
+   return <Home/>;
    //return <Product />
    //return <SignUp />
    //return <LogIn />
-   return <ShoppingCart />
+  //return <ShoppingCart />
 };
 
 export default App;

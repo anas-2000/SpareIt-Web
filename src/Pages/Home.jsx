@@ -21,12 +21,12 @@ const Home = () => {
     //     <Footer />
     // </Box>  
     <div>
-      <Announcements />
+      {/* <Announcements /> */}
       <Navbar />
       <Slider />
       <Categories />
       <Catalog />
-      <Products />
+      <Products category={"All"} make={[]} year={[]} />
       <Footer />
     </div>
 

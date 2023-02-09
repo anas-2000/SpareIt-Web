@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
 import styled from 'styled-components'
 import Announcements from '../Components/Announcements';
 import Footer from '../Components/Footer';
@@ -14,13 +14,24 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
+import {useLocation} from "react-router-dom";
 
 
 const Container = styled.div``;
 
 const Title = styled.h1`
+  font-weight: 700;
   margin: 20px;
   text-align: center;
+  ::before,::after{
+    content:" ";
+    width:10px;
+    height:10px;
+    margin-bottom: 7px;
+    border-radius:50%;
+    background: red;
+    display:inline-block;
+  }
 `;
 
 
@@ -64,7 +75,6 @@ const MenuProps = {
   },
 };
 
-const Option = styled.option``;
 
 
 const ProductList = () => {
@@ -74,6 +84,8 @@ const ProductList = () => {
 
   const [selectedMake, setSelectedMake] = useState([]);
   const [selectedYear, setSelectedYear] = useState([]);
+  const search = useLocation().search;
+  const name = new URLSearchParams(search).get('name');
 
   useEffect(() => {
     async function getMake (){
@@ -125,9 +137,8 @@ const ProductList = () => {
 
   return (
     <Container>
-        <Announcements />
         <Navbar />
-        <Title>ALL PRODUCTS</Title>
+        <Title>{name === "All" ? " ALL PRODUCTS ": " "+ name.toUpperCase() +" "}</Title>
         <FilterContainer>
         <FilterText>FIND PARTS FOR YOUR CAR</FilterText>
         <Filter>
@@ -174,36 +185,14 @@ const ProductList = () => {
         </Select>
         </FormControl>
         <FormControl sx={{ m: 1, width: 200 }}><Button variant="contained" color='error' size='large'>Find</Button></FormControl>
-        
         </Filter>
-
-            {/* <Filter>
-              <Select>
-                <Option disabled selected>
-                  Year
-                </Option>
-                {years.length > 0 && (years.map((year, index) => (
-                  <Option key={index}>
-                    {year}
-                  </Option>
-                )))}
-              </Select>
-              <Select>
-                <Option disabled selected>
-                  Make
-                </Option>
-                {makes.length > 0 && (makes.map((make) => (
-                  <Option key={make.id} >
-                    {make.name}
-                  </Option>
-                )))}
-              </Select>
-            </Filter> */}
         </FilterContainer>
-        <Products />
+        <Products category={name} make={selectedMake} year = {selectedYear} />
         <Footer />
     </Container>
   )
 }
 
 export default ProductList
+
+// Keep objects that have specific attribute value in js object array?

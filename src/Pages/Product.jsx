@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   padding: 50px;
   display: flex;
   position: relative;
-  ${mobile({ padding: "10px", flexDirection:"column" })}
+  ${mobile({ padding: "10px", flexDirection: "column" })}
 `;
 
 const Arrow = styled.div`
@@ -103,7 +103,7 @@ const Amount = styled.span`
   align-items: center;
   justify-content: center;
   margin: 0px 5px;
-`;  
+`;
 
 const StyledButton = styled.button`
   padding: 15px;
@@ -121,89 +121,88 @@ const Quantity = styled.div`
 `;
 
 const Product = () => {
-    const [imageIndex, setImageIndex] = useState(0); 
-    const [leftarrowColor, setLeftArrowColor] = useState("red");
-    const [rightarrowColor, setRightArrowColor] = useState("red");
-    const [amount, setAmount] = useState(1);
+  const [imageIndex, setImageIndex] = useState(0);
+  const [leftarrowColor, setLeftArrowColor] = useState("red");
+  const [rightarrowColor, setRightArrowColor] = useState("red");
+  const [amount, setAmount] = useState(1);
 
-    const handleClick = (direction) => {
-        if(direction === "left"){
-            setImageIndex(imageIndex > 0 ?  imageIndex - 1: products[8].img.length - 1); //if slide index > 0 decrement slide index by 1
-            // else go to the last slide       
-        }
-        else{
-            setImageIndex(imageIndex < products[8].img.length - 1 ? imageIndex + 1: 0);
-        }
+  const handleClick = (direction) => {
+    if (direction === "left") {
+      setImageIndex(imageIndex > 0 ? imageIndex - 1 : products[8].img.length - 1); //if slide index > 0 decrement slide index by 1
+      // else go to the last slide       
+    }
+    else {
+      setImageIndex(imageIndex < products[8].img.length - 1 ? imageIndex + 1 : 0);
+    }
+  }
+
+  const mouseEnter = (direction) => {
+    if (direction === "left") {
+      setLeftArrowColor("white");
+    }
+    else {
+      setRightArrowColor("white");
     }
 
-    const mouseEnter = (direction) => {
-        if(direction==="left"){
-        setLeftArrowColor("white");
-        }
-        else{
-        setRightArrowColor("white");
-        }
-        
-    };
-  
-    const mouseLeave = (direction) => {
-        if(direction === "left"){
-        setLeftArrowColor("red");
-        }
-        else{
-        setRightArrowColor("red");
-        }
-        
-    };
+  };
 
-    const add = () => {
-        setAmount(amount + 1);
-    };
-    
-    const remove = () => {
-        if(amount > 0)
-            setAmount(amount - 1);
+  const mouseLeave = (direction) => {
+    if (direction === "left") {
+      setLeftArrowColor("red");
     }
+    else {
+      setRightArrowColor("red");
+    }
+
+  };
+
+  const add = () => {
+    setAmount(amount + 1);
+  };
+
+  const remove = () => {
+    if (amount > 0)
+      setAmount(amount - 1);
+  }
 
 
 
   return (
     <Container>
-        <Announcements />
-        <Navbar />
-        <Wrapper>
-            <ImgContainer >
-            <Arrow direction = "left" onClick={()=>handleClick("left")}  onMouseEnter={()=> mouseEnter("left")}
-            onMouseLeave ={()=>mouseLeave("left")}>
-                <ArrowBackIosNewIcon sx={{color: leftarrowColor}}/>
-            </Arrow>
-            {/* {products[8].img.map((image) => (
+      <Navbar />
+      <Wrapper>
+        <ImgContainer >
+          <Arrow direction="left" onClick={() => handleClick("left")} onMouseEnter={() => mouseEnter("left")}
+            onMouseLeave={() => mouseLeave("left")}>
+            <ArrowBackIosNewIcon sx={{ color: leftarrowColor }} />
+          </Arrow>
+          {/* {products[8].img.map((image) => (
                 <Image src = {image} />
             ))} */}
 
-           <Image src = {products[8].img[imageIndex]} />
-            
-                <Arrow direction="right" onClick={()=>handleClick("right")}   onMouseEnter={()=> mouseEnter("right")}
-                    onMouseLeave ={()=>mouseLeave("right")}>
-                    <ArrowForwardIosIcon sx={{color: rightarrowColor}} />
-                </Arrow>
-            </ImgContainer>
-            <InfoContainer>
-                <Title>{products[8].title}</Title>
-                <Desc>{products[8].desc}
-                </Desc>
-                <Price>Rs 55000</Price>
-                <AddContainer>
-                <AmountContainer>
-                <Button variant="text" onClick={()=>remove()} color='error'><RemoveIcon sx={{color:"red"}} /></Button>
-                    <Amount>{amount}</Amount>
-                    <Button variant="text" onClick={()=>add()} color='error'><AddIcon sx={{color:"red"}} /></Button>
-                    </AmountContainer>
-                    <StyledButton>ADD TO CART</StyledButton>
-                </AddContainer>
-            </InfoContainer>
-        </Wrapper>
-        <Footer />
+          <Image src={products[8].img[imageIndex]} />
+
+          <Arrow direction="right" onClick={() => handleClick("right")} onMouseEnter={() => mouseEnter("right")}
+            onMouseLeave={() => mouseLeave("right")}>
+            <ArrowForwardIosIcon sx={{ color: rightarrowColor }} />
+          </Arrow>
+        </ImgContainer>
+        <InfoContainer>
+          <Title>{products[8].title}</Title>
+          <Desc>{products[8].desc}
+          </Desc>
+          <Price>Rs 55000</Price>
+          <AddContainer>
+            <AmountContainer>
+              <Button variant="text" onClick={() => remove()} color='error'><RemoveIcon sx={{ color: "red" }} /></Button>
+              <Amount>{amount}</Amount>
+              <Button variant="text" onClick={() => add()} color='error'><AddIcon sx={{ color: "red" }} /></Button>
+            </AmountContainer>
+            <StyledButton>ADD TO CART</StyledButton>
+          </AddContainer>
+        </InfoContainer>
+      </Wrapper>
+      <Footer />
     </Container>
   )
 }

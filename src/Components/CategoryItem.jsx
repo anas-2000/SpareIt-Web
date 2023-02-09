@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import { mobile } from "../responsive";
 
@@ -42,12 +43,14 @@ const Title = styled.h3`
 const CategoryItem = ({ item }) => {
     return (
         <Container>
-            <Image src={item.img} />
-            <Info>
-                <Title>
-                    {item.title}
-                </Title>
-            </Info>
+            <Link to={`/products/category?name=${item.title}`} style={{ color: 'inherit', textDecoration: 'inherit'}} >
+                <Image src={item.img} />
+                <Info>
+                    <Title>
+                        {item.title}
+                    </Title>
+                </Info>
+            </Link>
         </Container>
     )
 }

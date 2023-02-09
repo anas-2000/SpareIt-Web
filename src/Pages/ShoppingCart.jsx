@@ -172,7 +172,6 @@ const Cart = () => {
     return (
         <ThemeProvider theme={theme}>
             <Container>
-                <Announcements />
                 <Navbar />
                 <Wrapper>
                     <Title>YOUR CART</Title>

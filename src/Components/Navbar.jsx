@@ -11,9 +11,10 @@ import { mobile } from "../responsive";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { red, blue } from '@mui/material/colors';
 
-
 const Container = styled.div`
 height: 60px;
+border-bottom: 5px solid;
+
 ${mobile({ height: "50px" })}
 `
 const Wrapper = styled.div`
@@ -71,24 +72,24 @@ const theme = createTheme({
 const Navbar = () => {
     return (
         <ThemeProvider theme={theme}>
-            <Container>
+            <Container style={{borderColor: red[800]}}>
                 <Wrapper>
                     <Left>
                         <TextField id="SearchField" variant='outlined'  size='small' placeholder='Search' InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <SearchIcon sx={{ color: red[800] }} />
+                                    <SearchIcon sx={{ color:"primary.main" }} />
                                 </InputAdornment>
                             )
                         }}></TextField>
                     </Left>
                     <Center>
                         {/* <img src={Logo} alt="Logo" style={{ width: '100px', height: '60px/', margin: '0 20px' }} /> */}
-                        <Logo>SpareIT</Logo>
+                        <Logo>SPARE<span style={{color: red[800]}}>IT</span></Logo>
                     </Center>
                     <Right>
-                        <MenuItem>Register</MenuItem>
-                        <MenuItem>SignIn</MenuItem>
+                        <MenuItem style={{color: red[800]}}>Register</MenuItem>
+                        <MenuItem style={{color: red[800]}}>SignIn</MenuItem>
                         <MenuItem>
                             <Badge badgeContent={3} color="primary">
                                 <ShoppingCartOutlinedIcon color='primary'></ShoppingCartOutlinedIcon>

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { Link } from 'react-router-dom';
 
 
 
@@ -11,7 +12,8 @@ const Info = styled.div`
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 100;
+    top: 0;
+    //top: 100;
     left: 0;
     z-index: 3;
     background-color: rgba(255, 0, 0, 0.5);
@@ -76,26 +78,28 @@ const Title = styled.h4`
 `;
 
 
-const ProductCard = ({product}) => {
-  return (
-    <Container>
-        <Image src = {product.img[0]} />
-        <Info>
-            <Icon>
-                <ShoppingCartOutlinedIcon />
-            </Icon>
-            <Icon>
-                <SearchOutlinedIcon />
-            </Icon>
-            <Icon>
-                <FavoriteBorderOutlinedIcon />
-            </Icon>
-        </Info>
-        <CardFooter>
-            <Title> {product.title}</Title>
-        </CardFooter>
-    </Container>
-  )
+const ProductCard = ({ product }) => {
+    return (
+        <Container>
+            <Link to={`/products/${product.id}`} style={{ color: 'inherit', textDecoration: 'inherit' }} >
+                <Image src={product.img[0]} />
+                <Info>
+                    <Icon>
+                        <ShoppingCartOutlinedIcon />
+                    </Icon>
+                    <Icon>
+                        <SearchOutlinedIcon />
+                    </Icon>
+                    <Icon>
+                        <FavoriteBorderOutlinedIcon />
+                    </Icon>
+                </Info>
+                <CardFooter>
+                    <Title> {product.title}</Title>
+                </CardFooter>
+            </Link>
+        </Container>
+    )
 }
 
 export default ProductCard

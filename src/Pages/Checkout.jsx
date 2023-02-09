@@ -23,7 +23,7 @@ function Copyright() {
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                SpareIT
+                SPAREIT
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -82,7 +82,7 @@ const Checkout = () => {
             >
                 <Toolbar>
                     <Typography variant="h6" color="inherit" noWrap>
-                        SpareIT
+                        SPAREIT
                     </Typography>
                 </Toolbar>
             </AppBar>

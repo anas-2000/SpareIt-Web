@@ -11,6 +11,8 @@ import { useState } from "react"
 import { mobile } from "../responsive"
 import { products } from '../products'
 import Button from '@mui/material/Button';
+import { useLocation } from 'react-router-dom'
+
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -125,14 +127,19 @@ const Product = () => {
   const [leftarrowColor, setLeftArrowColor] = useState("red");
   const [rightarrowColor, setRightArrowColor] = useState("red");
   const [amount, setAmount] = useState(1);
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState(products.find((product) => product.id == id));
+  console.log(id);
+
 
   const handleClick = (direction) => {
     if (direction === "left") {
-      setImageIndex(imageIndex > 0 ? imageIndex - 1 : products[8].img.length - 1); //if slide index > 0 decrement slide index by 1
+      setImageIndex(imageIndex > 0 ? imageIndex - 1 : product.img.length - 1); //if slide index > 0 decrement slide index by 1
       // else go to the last slide       
     }
     else {
-      setImageIndex(imageIndex < products[8].img.length - 1 ? imageIndex + 1 : 0);
+      setImageIndex(imageIndex < product.img.length - 1 ? imageIndex + 1 : 0);
     }
   }
 
@@ -180,7 +187,7 @@ const Product = () => {
                 <Image src = {image} />
             ))} */}
 
-          <Image src={products[8].img[imageIndex]} />
+          <Image src={product.img[imageIndex]} />
 
           <Arrow direction="right" onClick={() => handleClick("right")} onMouseEnter={() => mouseEnter("right")}
             onMouseLeave={() => mouseLeave("right")}>
@@ -188,10 +195,10 @@ const Product = () => {
           </Arrow>
         </ImgContainer>
         <InfoContainer>
-          <Title>{products[8].title}</Title>
-          <Desc>{products[8].desc}
+          <Title>{product.title}</Title>
+          <Desc>{product.desc}
           </Desc>
-          <Price>Rs 55000</Price>
+          <Price>Rs {product.price}</Price>
           <AddContainer>
             <AmountContainer>
               <Button variant="text" onClick={() => remove()} color='error'><RemoveIcon sx={{ color: "red" }} /></Button>

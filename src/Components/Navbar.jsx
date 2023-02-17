@@ -10,6 +10,8 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { mobile } from "../responsive";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { red, blue } from '@mui/material/colors';
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
 height: 60px;
@@ -70,6 +72,7 @@ const theme = createTheme({
 });
 
 const Navbar = () => {
+    const quantity = useSelector(state=>state.cart.quantity)
     return (
         <ThemeProvider theme={theme}>
             <Container style={{borderColor: red[800]}}>
@@ -90,11 +93,13 @@ const Navbar = () => {
                     <Right>
                         <MenuItem style={{color: red[800]}}>Register</MenuItem>
                         <MenuItem style={{color: red[800]}}>SignIn</MenuItem>
+                        <Link to="/cart">
                         <MenuItem>
-                            <Badge badgeContent={3} color="primary">
+                            <Badge badgeContent={quantity} color="primary">
                                 <ShoppingCartOutlinedIcon color='primary'></ShoppingCartOutlinedIcon>
                             </Badge>
                         </MenuItem>
+                        </Link>
                     </Right>
                 </Wrapper>
             </Container>

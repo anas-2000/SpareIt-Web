@@ -12,6 +12,8 @@ import { mobile } from "../responsive"
 import { products } from '../products'
 import Button from '@mui/material/Button';
 import { useLocation } from 'react-router-dom'
+import { addProduct } from '../Redux/cartRedux'
+import { useDispatch } from "react-redux";
 
 
 const Container = styled.div``;
@@ -126,12 +128,19 @@ const Product = () => {
   const [imageIndex, setImageIndex] = useState(0);
   const [leftarrowColor, setLeftArrowColor] = useState("red");
   const [rightarrowColor, setRightArrowColor] = useState("red");
-  const [amount, setAmount] = useState(1);
+  // const [amount, setAmount] = useState(1);
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState(products.find((product) => product.id == id));
-  console.log(id);
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
+
+  const addToCart = () => {
+    dispatch(
+      addProduct({ ...product, quantity })
+    );
+  }
 
   const handleClick = (direction) => {
     if (direction === "left") {
@@ -163,14 +172,13 @@ const Product = () => {
 
   };
 
-  const add = () => {
-    setAmount(amount + 1);
-  };
-
-  const remove = () => {
-    if (amount > 0)
-      setAmount(amount - 1);
+const handleQuantity = (type) => {
+  if (type === "dec") {
+    quantity > 1 && setQuantity(quantity - 1);
+  } else {
+    setQuantity(quantity + 1);
   }
+};
 
 
 
@@ -201,11 +209,11 @@ const Product = () => {
           <Price>Rs {product.price}</Price>
           <AddContainer>
             <AmountContainer>
-              <Button variant="text" onClick={() => remove()} color='error'><RemoveIcon sx={{ color: "red" }} /></Button>
-              <Amount>{amount}</Amount>
-              <Button variant="text" onClick={() => add()} color='error'><AddIcon sx={{ color: "red" }} /></Button>
+              <Button variant="text" onClick={() => handleQuantity("dec")} color='error'><RemoveIcon sx={{ color: "red" }} /></Button>
+              <Amount>{quantity}</Amount>
+              <Button variant="text" onClick={() => handleQuantity("inc")} color='error'><AddIcon sx={{ color: "red" }} /></Button>
             </AmountContainer>
-            <StyledButton>ADD TO CART</StyledButton>
+            <StyledButton onClick={() => addToCart()}>ADD TO CART</StyledButton>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

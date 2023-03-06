@@ -14,6 +14,10 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { blue, red } from '@mui/material/colors';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useState } from 'react';
+import { login } from '../Redux/apiCalls';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 
 function Copyright(props) {
@@ -40,15 +44,25 @@ function Copyright(props) {
     },
   });
 
+  const Error = styled.span`
+  color: red;
+`;
+
 const LogIn = () => {
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
+        login(dispatch, { username, password });
+        // const data = new FormData(event.currentTarget);
+        // console.log({
+        //   email: data.get('email'),
+        //   password: data.get('password'),
+        // });
       };
 
 
@@ -96,6 +110,7 @@ const LogIn = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e) => setUsername(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -106,6 +121,7 @@ const LogIn = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -116,6 +132,7 @@ const LogIn = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={isFetching}
               >
                 Sign In
               </Button>
@@ -142,6 +159,7 @@ const LogIn = () => {
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
+            {error && <Error>Something went wrong...</Error>}
           </Box>
         </Grid>
       </Grid>

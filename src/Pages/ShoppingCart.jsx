@@ -193,7 +193,19 @@ const Cart = () => {
               <TopText>CART({cartItems.length})</TopText>
               <TopText>Your Wishlist (0)</TopText>
             </TopTexts>
-            <Button variant="contained">CHECKOUT NOW</Button>
+            <StripeCheckout
+                name="SPAREIT"
+                // image="https://avatars.githubusercontent.com/u/1486366?v=4"
+                billingAddress
+                shippingAddress
+                description={`Your total is Rs ${cart.total}`}
+                amount={cart.total * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <Button variant="contained">CHECKOUT NOW</Button>
+              </StripeCheckout>
+            {/* <Button variant="contained">CHECKOUT NOW</Button> */}
           </Top>
           <Bottom>
             <Info>

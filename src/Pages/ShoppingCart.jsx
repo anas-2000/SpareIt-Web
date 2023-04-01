@@ -12,9 +12,12 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
+import { useNavigate } from "react-router";
+import { removeProduct } from '../Redux/cartRedux'
+import { useDispatch } from "react-redux";
 
 
-const KEY = process.env.REACT_APP_STRIPE;
+// const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
@@ -155,45 +158,65 @@ const theme = createTheme({
 const Cart = () => {
   const [subtotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
-  const shipping = 500;
-  const discount = 1000;
+  const shipping = 1000;
+  // const discount = 1000;
   const cart = useSelector((state) => state.cart);
-  const [stripeToken, setStripeToken] = useState(null);
+  // const [stripeToken, setStripeToken] = useState(null);
 
-  console.log(stripeToken);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const onToken = (token) => {
-    setStripeToken(token);
-  };
+  const removeFromCart = (product) => {
+    dispatch(
+      removeProduct({...product})
+    );
+  }
+
+
+  // const onToken = (token) => {
+  //   setStripeToken(token);
+  // };
   
 
-  useEffect(() => {
-    function calculateTotal() {
-      var sum = 0;
-      cartItems.forEach(items => {
-        sum = sum + items.quantity * items.product.price;
-      });
-      setSubTotal(sum);
-      setTotal(subtotal + shipping - discount);
-    }
+  // useEffect(() => {
+  //   function calculateTotal() {
+  //     var sum = 0;
+  //     cart.products.forEach(items => {
+  //       sum = sum + items.quantity * items.product.price;
+  //     });
+  //     setSubTotal(sum);
+  //     setTotal(subtotal + shipping);
+  //   }
 
-    calculateTotal();
-  }, []);
+  //   calculateTotal();
+  // }, []);
 
+  const checkOut = () => {
+    navigate('/checkout');
+  };
+
+  const continueShopping = () => {
+    navigate('/');
+  };
 
   return (
+
     <ThemeProvider theme={theme}>
       <Container>
         <Navbar />
         <Wrapper>
           <Title>YOUR CART</Title>
           <Top>
-            <Button variant='outlined'>CONTINUE SHOPPING</Button>
+            <Button variant='outlined' onClick={continueShopping}>CONTINUE SHOPPING</Button>
             <TopTexts>
-              <TopText>CART({cartItems.length})</TopText>
+              <TopText>CART({cart.products.length})</TopText>
               <TopText>Your Wishlist (0)</TopText>
             </TopTexts>
-            <StripeCheckout
+
+            <Button variant="contained" onClick={checkOut}>CHECKOUT NOW</Button>
+            
+            {/* moved to checkout */}
+            {/* <StripeCheckout
                 name="SPAREIT"
                 // image="https://avatars.githubusercontent.com/u/1486366?v=4"
                 billingAddress
@@ -204,8 +227,10 @@ const Cart = () => {
                 stripeKey={KEY}
               >
                 <Button variant="contained">CHECKOUT NOW</Button>
-              </StripeCheckout>
-            {/* <Button variant="contained">CHECKOUT NOW</Button> */}
+              </StripeCheckout> */}
+
+
+            
           </Top>
           <Bottom>
             <Info>
@@ -225,9 +250,9 @@ const Cart = () => {
                     </ProductDetail>
                     <PriceDetail>
                       <ProductAmountContainer>
-                        <Button variant="text"><Remove /></Button>
+                        <Button variant="text"><Remove onClick={() => removeFromCart(product)} /></Button>
                         <ProductAmount>{product.quantity}</ProductAmount>
-                        <Button variant="text" ><Add /></Button>
+                        <Button variant="text"><Add /></Button>
                       </ProductAmountContainer>
                       <ProductPrice>Rs {product.price * product.quantity}</ProductPrice>
                     </PriceDetail>
@@ -272,13 +297,13 @@ const Cart = () => {
                 <SummaryItemText>Estimated Shipping</SummaryItemText>
                 <SummaryItemPrice>Rs {shipping}</SummaryItemPrice>
               </SummaryItem>
-              <SummaryItem>
+              {/* <SummaryItem>
                 <SummaryItemText>Shipping Discount</SummaryItemText>
                 <SummaryItemPrice>Rs -{discount}</SummaryItemPrice>
-              </SummaryItem>
+              </SummaryItem> */}
               <SummaryItem type="total">
                 <SummaryItemText>Total</SummaryItemText>
-                <SummaryItemPrice>Rs {cart.total}</SummaryItemPrice>
+                <SummaryItemPrice>Rs {cart.total + shipping}</SummaryItemPrice>
               </SummaryItem>
               {/* <SummaryItem>
                                 <SummaryItemText>Subtotal</SummaryItemText>
@@ -296,7 +321,7 @@ const Cart = () => {
                                 <SummaryItemText>Total</SummaryItemText>
                                 <SummaryItemPrice>Rs {total}</SummaryItemPrice>
                             </SummaryItem> */}
-              <StripeCheckout
+              {/* <StripeCheckout
                 name="SPAREIT"
                 // image="https://avatars.githubusercontent.com/u/1486366?v=4"
                 billingAddress
@@ -307,7 +332,8 @@ const Cart = () => {
                 stripeKey={KEY}
               >
                 <Button>CHECKOUT NOW</Button>
-              </StripeCheckout>
+              </StripeCheckout> */}
+              <Button onClick={checkOut}>CHECKOUT NOW</Button>
               
             </Summary>
           </Bottom>

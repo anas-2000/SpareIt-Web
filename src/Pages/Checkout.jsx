@@ -17,6 +17,14 @@ import AddressForm from '../Components/AddressForm';
 import PaymentForm from '../Components/PaymentForm';
 import Review from '../Components/ReviewForm';
 import { red, blue } from '@mui/material/colors';
+import { useState } from 'react';
+import StripeCheckout from "react-stripe-checkout";
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { userRequest } from "../requestMethods";
+
+
 
 function Copyright() {
     return (
@@ -33,18 +41,18 @@ function Copyright() {
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return <AddressForm />;
-        case 1:
-            return <PaymentForm />;
-        case 2:
-            return <Review />;
-        default:
-            throw new Error('Unknown step');
-    }
-}
+// function getStepContent(step) {
+//     switch (step) {
+//         case 0:
+//             return <AddressForm />;
+//         case 1:
+//             return <PaymentForm />;
+//         case 2:
+//             return <Review />;
+//         default:
+//             throw new Error('Unknown step');
+//     }
+// }
 
 const theme = createTheme({
     palette: {
@@ -57,17 +65,142 @@ const theme = createTheme({
     },
 });
 
+const KEY = process.env.REACT_APP_STRIPE;
+
 const Checkout = () => {
 
     const [activeStep, setActiveStep] = React.useState(0);
+    const [paymentMethod, setpaymentMethod] = useState('');
+    const [details, setDetails] = useState( {
+        // 'firstName':'',
+        // 'lastName': '',
+        // 'address1': '',
+        // 'address2': '',
+        // 'city': '',
+        // 'state': '',
+        // 'zip': '',
+        // 'country': '',
+    });
+    const userDetails = {};
+    // const details = {
+    //     'firstName':'',
+    //     'lastName': '',
+    //     'address1': '',
+    //     'address2': '',
+    //     'city': '',
+    //     'state': '',
+    //     'zip': '',
+    //     'country': '',
+    // };
+
+    // const [firstName, setFirstName] = useState('');
+    // const [lastName, setlastName] = useState('');
+    // const [address1, setaddress1] = useState('');
+    // const [address2, setaddress2] = useState('');
+    // const [city, setCity] = useState('');
+    // const [state, setstate] = useState('');
+    // const [zip, setzip] = useState('');
+    // const [country, setcountry] = useState('');
+
+    const [stripeToken, setStripeToken] = useState(null);
+    const [total, setTotal] = useState(0);
+    const [shipping, setShipping] = useState(1000);
+    const [custaddress, setAddress] = useState('');
+    const cart = useSelector((state) => state.cart);
+    const user = useSelector((state) => state.user.currentUser);
+    const navigate = useNavigate();
+
+
+    // const setDetails = (key, value) => {
+    //     details[key] =  value;
+    // };
+
+    const onToken = (token) => {
+        setStripeToken(token);
+    };
+
+    useEffect(() => {
+        const addOrder = async () => {
+            const prod = cart.products;
+            const productCount = prod.reduce((acc, product) => {
+                if (product.id in acc) {  //change id to _id when connecting with database
+                    acc[product.id]++;
+                } else {
+                    acc[product.id] = 1;
+                }
+                return acc;
+            }, {});
+
+            const result = Object.entries(productCount).map(([id, count]) => ({ productID: id, quantity: count }));
+
+            const order = {
+                userId: user._id,
+                products: result,
+                amount: cart.total + shipping,
+                address: custaddress,
+                status: "pending",
+            };
+            try {
+                const res = await userRequest.post("/orders", order);
+            } catch{}
+        }
+
+
+        const makeRequest = async () => {
+            try {
+                const res = await userRequest.post("/stripe/payment", {
+                    tokenId: stripeToken.id,
+                    amount: cart.total * 100,
+                });
+                navigate('/', {
+                    stripeData: res.data,
+                    products: cart,
+                })
+                // history.push("/", {
+                //     stripeData: res.data,
+                //     products: cart,
+                // });
+            } catch { }
+        };
+
+        stripeToken && addOrder();
+        stripeToken && makeRequest();
+
+    }, [stripeToken, cart, navigate]);
+
+    function getStepContent(step) {
+        switch (step) {
+            case 0:
+                return <AddressForm details={setDetails} />;
+            case 1:
+                return <PaymentForm payment={setpaymentMethod} />;
+            case 2:
+                return <Review  details={details} payment={paymentMethod} />;
+            default:
+                throw new Error('Unknown step');
+        }
+    }
 
     const handleNext = () => {
+        // if(activeStep === 0){  
+        //     if(details['firstName'].length > 0 && details['lastName'].length > 0 && details['address1'].length > 0
+        //     && details['address2'].length > 0 && details['city'].length > 0 && details['zip'].length > 0
+        //     && details['country'].length > 0){
+        //         setActiveStep(activeStep + 1);        
+        //     }
+        //     return;
+        // }
+        // if(activeStep === 2){
+        //     console.log(details);
+        // }
         setActiveStep(activeStep + 1);
     };
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
+
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -98,18 +231,31 @@ const Checkout = () => {
                             </Step>
                         ))}
                     </Stepper>
-                    {activeStep === steps.length ? (
-                        <React.Fragment>
-                            <Typography variant="h5" gutterBottom>
-                                Thank you for your order.
-                            </Typography>
-                            <Typography variant="subtitle1">
-                                Your order number is #2001539. We have emailed your order
-                                confirmation, and will send you an update when your order has
-                                shipped.
-                            </Typography>
-                        </React.Fragment>
-                    ) : (
+                    {activeStep === steps.length ? <>{paymentMethod === 'card' ?
+                        <StripeCheckout
+                            name="SPAREIT"
+                            // image="https://avatars.githubusercontent.com/u/1486366?v=4"
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is Rs ${cart.total + shipping}`}
+                            amount={(cart.total + shipping) * 100}
+                            token={onToken}
+                            stripeKey={KEY}
+                        >
+                            <Button variant="contained">CHECKOUT NOW</Button>
+                        </StripeCheckout>
+                        : (
+                            <React.Fragment>
+                                <Typography variant="h5" gutterBottom>
+                                    Thank you for your order.
+                                </Typography>
+                                <Typography variant="subtitle1">
+                                    Your order number is #2001539. We have emailed your order
+                                    confirmation, and will send you an update when your order has
+                                    shipped.
+                                </Typography>
+                            </React.Fragment>
+                        )} </> : (
                         <React.Fragment>
                             {getStepContent(activeStep)}
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

@@ -137,8 +137,11 @@ const Product = () => {
 
 
   const addToCart = () => {
+    // const cartproduct = {...product, quantity};
+
     dispatch(
-      addProduct({ ...product, quantity })
+      // addProduct({ ...product, quantity })
+      addProduct({ ...product, 'quantity': quantity })
     );
   }
 

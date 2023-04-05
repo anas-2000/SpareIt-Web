@@ -18,11 +18,24 @@ const cartSlice = createSlice({
             const index = state.products.findIndex(product => product.id === action.payload.id); //change this to _id when integrating with backend
             const newItems = [...state.products.slice(0, index), ...state.products.slice(index + 1)];
             state.quantity -= 1;
-            state.total -= action.payload.price;
+            state.total -= action.payload.quantity * action.payload.price;
             state.products = newItems;
+        },
+        decreaseProduct: (state, action) => {
+            const index = state.products.findIndex(product => product.id === action.payload.id); //change this to _id when integrating with backend
+            if (state.products[index].quantity === 1) {
+                const newItems = [...state.products.slice(0, index), ...state.products.slice(index + 1)];
+                state.quantity -= 1;
+                state.total -= action.payload.quantity * action.payload.price;
+                state.products = newItems;
+            }
+            else{
+                state.products[index].quantity -= 1;
+                state.total -= action.payload.price;
+            }
         }
     },
 });
 
-export const { addProduct, removeProduct } = cartSlice.actions;
+export const { addProduct, removeProduct, decreaseProduct } = cartSlice.actions;
 export default cartSlice.reducer;

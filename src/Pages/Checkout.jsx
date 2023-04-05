@@ -70,7 +70,7 @@ const KEY = process.env.REACT_APP_STRIPE;
 const Checkout = () => {
 
     const [activeStep, setActiveStep] = React.useState(0);
-    const [paymentMethod, setpaymentMethod] = useState('');
+    const [paymentMethod, setpaymentMethod] = useState('card');
     const [details, setDetails] = useState( {
         // 'firstName':'',
         // 'lastName': '',

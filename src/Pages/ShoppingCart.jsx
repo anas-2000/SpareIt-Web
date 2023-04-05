@@ -13,7 +13,7 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from "react-router";
-import { removeProduct } from '../Redux/cartRedux'
+import { decreaseProduct, removeProduct } from '../Redux/cartRedux'
 import { useDispatch } from "react-redux";
 
 
@@ -170,7 +170,13 @@ const Cart = () => {
     dispatch(
       removeProduct({...product})
     );
-  }
+  };
+
+  const decreaseItemQuantity = (product) => {
+    dispatch(
+      decreaseProduct({...product})
+    );
+  };
 
 
   // const onToken = (token) => {
@@ -250,7 +256,8 @@ const Cart = () => {
                     </ProductDetail>
                     <PriceDetail>
                       <ProductAmountContainer>
-                        <Button variant="text"><Remove onClick={() => removeFromCart(product)} /></Button>
+                        {/* <Button variant="text"><Remove onClick={() => removeFromCart(product)} /></Button> */}
+                        <Button variant="text"><Remove onClick={() => decreaseItemQuantity(product)} /></Button>
                         <ProductAmount>{product.quantity}</ProductAmount>
                         <Button variant="text"><Add /></Button>
                       </ProductAmountContainer>

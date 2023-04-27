@@ -43,7 +43,7 @@ const Title = styled.h3`
 const CategoryItem = ({ item }) => {
     return (
         <Container>
-            <Link to={`/products/category?name=${item.title}`} style={{ color: 'inherit', textDecoration: 'inherit'}} >
+            <Link to={`/products/category?name=${item.title.replace(/&/g, '%26')}`} style={{ color: 'inherit', textDecoration: 'inherit'}} >
                 <Image src={item.img} />
                 <Info>
                     <Title>

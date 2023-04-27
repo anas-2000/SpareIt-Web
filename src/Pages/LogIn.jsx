@@ -63,6 +63,7 @@ const LogIn = () => {
         //   email: data.get('email'),
         //   password: data.get('password'),
         // });
+
       };
 
 
@@ -127,6 +128,7 @@ const LogIn = () => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
+              <div>{error && <Error>Invalid username or password</Error>}</div>
               <Button
                 type="submit"
                 fullWidth
@@ -136,7 +138,7 @@ const LogIn = () => {
               >
                 Sign In
               </Button>
-              <Typography>Other Options:</Typography>
+              {/* <Typography>Other Options:</Typography>
               <Button
                 fullWidth
                 variant="contained"
@@ -144,7 +146,7 @@ const LogIn = () => {
                 sx={{ mt: 3, mb: 2 }}
               >
                 <GoogleIcon sx={{marginRight:'10px'}} />Sign in with Google
-              </Button>
+              </Button> */}
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
@@ -152,14 +154,14 @@ const LogIn = () => {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
-            {error && <Error>Something went wrong...</Error>}
+            
           </Box>
         </Grid>
       </Grid>

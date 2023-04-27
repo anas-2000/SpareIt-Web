@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Announcements from '../Components/Announcements'
 import Navbar from '../Components/Navbar'
@@ -9,11 +9,12 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useState } from "react"
 import { mobile } from "../responsive"
-import { products } from '../products'
+// import { products } from '../products'
 import Button from '@mui/material/Button';
 import { useLocation } from 'react-router-dom'
 import { addProduct } from '../Redux/cartRedux'
 import { useDispatch } from "react-redux";
+import { publicRequest } from "../requestMethods";
 
 
 const Container = styled.div``;
@@ -129,16 +130,33 @@ const Product = () => {
   const [leftarrowColor, setLeftArrowColor] = useState("red");
   const [rightarrowColor, setRightArrowColor] = useState("red");
   // const [amount, setAmount] = useState(1);
+  const [product, setProduct] = useState({});
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  const [product, setProduct] = useState(products.find((product) => product.id == id));
+  // const [product, setProduct] = useState(products.find((product) => product.id == id));
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/products/find/" + id);
+        setProduct(res.data);
+        setLoading(false);
+      } catch { }
+    };
+    getProduct();
+  }, [id]);
+
 
 
   const addToCart = () => {
+    // const cartproduct = {...product, quantity};
+
     dispatch(
-      addProduct({ ...product, quantity })
+      // addProduct({ ...product, quantity })
+      addProduct({ ...product, 'quantity': quantity })
     );
   }
 
@@ -172,54 +190,58 @@ const Product = () => {
 
   };
 
-const handleQuantity = (type) => {
-  if (type === "dec") {
-    quantity > 1 && setQuantity(quantity - 1);
-  } else {
-    setQuantity(quantity + 1);
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
+
+  if (loading) {
+    return <div>Loading...</div>
   }
-};
-
-
-
-  return (
-    <Container>
-      <Navbar />
-      <Wrapper>
-        <ImgContainer >
-          <Arrow direction="left" onClick={() => handleClick("left")} onMouseEnter={() => mouseEnter("left")}
-            onMouseLeave={() => mouseLeave("left")}>
-            <ArrowBackIosNewIcon sx={{ color: leftarrowColor }} />
-          </Arrow>
-          {/* {products[8].img.map((image) => (
+  else {
+    return (
+      <Container>
+        <Navbar />
+        <Wrapper>
+          <ImgContainer >
+            <Arrow direction="left" onClick={() => handleClick("left")} onMouseEnter={() => mouseEnter("left")}
+              onMouseLeave={() => mouseLeave("left")}>
+              <ArrowBackIosNewIcon sx={{ color: leftarrowColor }} />
+            </Arrow>
+            {/* {products[8].img.map((image) => (
                 <Image src = {image} />
             ))} */}
 
-          <Image src={product.img[imageIndex]} />
+            <Image src={product.img[imageIndex]} />
 
-          <Arrow direction="right" onClick={() => handleClick("right")} onMouseEnter={() => mouseEnter("right")}
-            onMouseLeave={() => mouseLeave("right")}>
-            <ArrowForwardIosIcon sx={{ color: rightarrowColor }} />
-          </Arrow>
-        </ImgContainer>
-        <InfoContainer>
-          <Title>{product.title}</Title>
-          <Desc>{product.desc}
-          </Desc>
-          <Price>Rs {product.price}</Price>
-          <AddContainer>
-            <AmountContainer>
-              <Button variant="text" onClick={() => handleQuantity("dec")} color='error'><RemoveIcon sx={{ color: "red" }} /></Button>
-              <Amount>{quantity}</Amount>
-              <Button variant="text" onClick={() => handleQuantity("inc")} color='error'><AddIcon sx={{ color: "red" }} /></Button>
-            </AmountContainer>
-            <StyledButton onClick={() => addToCart()}>ADD TO CART</StyledButton>
-          </AddContainer>
-        </InfoContainer>
-      </Wrapper>
-      <Footer />
-    </Container>
-  )
+            <Arrow direction="right" onClick={() => handleClick("right")} onMouseEnter={() => mouseEnter("right")}
+              onMouseLeave={() => mouseLeave("right")}>
+              <ArrowForwardIosIcon sx={{ color: rightarrowColor }} />
+            </Arrow>
+          </ImgContainer>
+          <InfoContainer>
+            <Title>{product.title}</Title>
+            <Desc>{product.desc}
+            </Desc>
+            <Price>Rs {product.price}</Price>
+            <AddContainer>
+              <AmountContainer>
+                <Button variant="text" onClick={() => handleQuantity("dec")} color='error'><RemoveIcon sx={{ color: "red" }} /></Button>
+                <Amount>{quantity}</Amount>
+                <Button variant="text" onClick={() => handleQuantity("inc")} color='error'><AddIcon sx={{ color: "red" }} /></Button>
+              </AmountContainer>
+              <StyledButton onClick={() => addToCart()}>ADD TO CART</StyledButton>
+            </AddContainer>
+          </InfoContainer>
+        </Wrapper>
+        <Footer />
+      </Container>
+    )
+  }
 }
 
 export default Product

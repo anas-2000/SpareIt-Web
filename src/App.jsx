@@ -22,9 +22,10 @@ const App = () => {
             </Route> */}
             <Route exact path="/" element={<Home />} />
             <Route path="/products/category?" element={<ProductList />} />
-            <Route path="/cart" element={<ShoppingCart />} />
+            <Route path="/cart" element={user?<ShoppingCart />:<Navigate to="/login" />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/login" element={<LogIn />} />
+            {/* <Route path="/login" element={<LogIn />} /> */}
+            <Route path="/login" element={user?<Navigate to="/" />:<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/products/:id" element={<Product />} />
             {/* <Route path="/products/:category">

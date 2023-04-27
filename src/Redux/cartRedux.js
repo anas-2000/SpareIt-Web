@@ -29,13 +29,31 @@ const cartSlice = createSlice({
                 state.total -= action.payload.quantity * action.payload.price;
                 state.products = newItems;
             }
-            else{
+            else {
                 state.products[index].quantity -= 1;
                 state.total -= action.payload.price;
             }
+        },
+        increaseProduct: (state, action) => {
+            const index = state.products.findIndex(product => product.id === action.payload.id); //change this to _id when integrating with backend
+            state.products[index].quantity += 1;
+            state.total += action.payload.price;
+        },
+        removeAllProducts: (state, action) => {
+            state.products = [];
+            state.quantity = 0;
+            state.total = 0;
+        },
+        emptyCart: (state) => {
+            return {
+                ...state,
+                products: [],
+                quantity: 0,
+                total: 0,
+            };
         }
     },
 });
 
-export const { addProduct, removeProduct, decreaseProduct } = cartSlice.actions;
+export const { addProduct, removeProduct, decreaseProduct, increaseProduct, removeAllProducts, emptyCart } = cartSlice.actions;
 export default cartSlice.reducer;

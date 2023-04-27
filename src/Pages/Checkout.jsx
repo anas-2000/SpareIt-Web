@@ -23,6 +23,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { userRequest } from "../requestMethods";
+import { emptyCart } from '../Redux/cartRedux'
+import { useDispatch } from "react-redux";
 
 
 
@@ -68,10 +70,10 @@ const theme = createTheme({
 const KEY = process.env.REACT_APP_STRIPE;
 
 const Checkout = () => {
-
+    const dispatch = useDispatch();
     const [activeStep, setActiveStep] = React.useState(0);
     const [paymentMethod, setpaymentMethod] = useState('card');
-    const [details, setDetails] = useState( {
+    const [details, setDetails] = useState({
         // 'firstName':'',
         // 'lastName': '',
         // 'address1': '',
@@ -109,6 +111,7 @@ const Checkout = () => {
     const cart = useSelector((state) => state.cart);
     const user = useSelector((state) => state.user.currentUser);
     const navigate = useNavigate();
+    const [orderId, setOrderId] = useState();
 
 
     // const setDetails = (key, value) => {
@@ -119,54 +122,153 @@ const Checkout = () => {
         setStripeToken(token);
     };
 
+    // useEffect(() => {
+    //     const addOrder = async () => {
+    //         const prod = cart.products;
+    //         const productCount = prod.reduce((acc, product) => {
+    //             if (product._id in acc) {  //change id to _id when connecting with database
+    //                 acc[product._id]++;
+    //             } else {
+    //                 acc[product._id] = 1;
+    //             }
+    //             return acc;
+    //         }, {});
+
+    //         // const result = Object.entries(productCount).map(([id, count]) => ({ productID: id, quantity: count }));
+    //         const result = Object.entries(productCount).map(([id, count]) => ({ product: id, quantity: count })); // add seller id to this
+
+    //         const order = {
+    //             customer: user._id,
+    //             products: result,
+    //             amount: cart.total + shipping,
+    //             address: custaddress,
+    //             status: "approved",
+    //         };
+    //         try {
+    //             const res = await userRequest.post("/orders", order);
+    //             console.log(res.body);
+    //             setOrderId(res.body._id);
+    //         } catch{}
+    //     }
+
+
+    //     const makeRequest = async () => {
+    //         try {
+    //             const res = await userRequest.post("/stripe/payment", {
+    //                 tokenId: stripeToken.id,
+    //                 amount: cart.total * 100,
+    //             });
+    //             navigate('/', {
+    //                 stripeData: res.data,
+    //                 products: cart,
+    //             })
+    //             // history.push("/", {
+    //             //     stripeData: res.data,
+    //             //     products: cart,
+    //             // });
+    //         } catch { }
+    //     };
+
+    //     stripeToken && addOrder();
+    //     // addOrder();
+    //     stripeToken && makeRequest();
+
+    // }, [stripeToken, cart, navigate]);
+
+
     useEffect(() => {
+        const makeRequest = async () => {
+            if (stripeToken) {
+                try {
+                    const res = await userRequest.post("/stripe/payment", {
+                        tokenId: stripeToken.id,
+                        amount: (cart.total + shipping) * 100 ,
+                    });
+                    checkOut();
+                    setpaymentMethod('cod');
+                    setActiveStep(steps.length);
+                    // navigate('/', {
+                    //     stripeData: res.data,
+                    //     products: cart,
+                    // })
+                } catch { }
+            }
+        };
+
+        // stripeToken && checkOut();
+        stripeToken && makeRequest();
+    }, [stripeToken])
+
+    const checkOut = () => {
         const addOrder = async () => {
             const prod = cart.products;
             const productCount = prod.reduce((acc, product) => {
-                if (product.id in acc) {  //change id to _id when connecting with database
-                    acc[product.id]++;
+                if (product._id in acc) {  //change id to _id when connecting with database
+                    acc[product._id]++;
                 } else {
-                    acc[product.id] = 1;
+                    acc[product._id] = 1;
                 }
                 return acc;
             }, {});
 
-            const result = Object.entries(productCount).map(([id, count]) => ({ productID: id, quantity: count }));
+            // const result = Object.entries(productCount).map(([id, count]) => ({ productID: id, quantity: count }));
+            const result = Object.entries(productCount).map(([id, count, sellerid]) => ({ product: id, quantity: count, seller: sellerid })); // add seller id to this
+            console.log(result);
 
             const order = {
-                userId: user._id,
-                products: result,
+                customer: user._id,
+                // products: result,
+                items: result,
                 amount: cart.total + shipping,
                 address: custaddress,
-                status: "pending",
+                status: "approved",
             };
             try {
+                // console.log(userRequest);
+                // console.log(order);
                 const res = await userRequest.post("/orders", order);
-            } catch{}
+                setOrderId(res.data._id);
+                dispatch(emptyCart());
+            } catch { }
         }
 
 
-        const makeRequest = async () => {
-            try {
-                const res = await userRequest.post("/stripe/payment", {
-                    tokenId: stripeToken.id,
-                    amount: cart.total * 100,
-                });
-                navigate('/', {
-                    stripeData: res.data,
-                    products: cart,
-                })
-                // history.push("/", {
-                //     stripeData: res.data,
-                //     products: cart,
-                // });
-            } catch { }
-        };
+        // const makeRequest = async () => {
+        //     try {
+        //         const res = await userRequest.post("/stripe/payment", {
+        //             tokenId: stripeToken.id,
+        //             amount: cart.total * 100,
+        //         });
+        //         navigate('/', {
+        //             stripeData: res.data,
+        //             products: cart,
+        //         })
+        //     } catch { }
+        // };
 
-        stripeToken && addOrder();
-        stripeToken && makeRequest();
+        addOrder();
+        // if(stripeToken){
+        //     makeRequest();
+        // }
 
-    }, [stripeToken, cart, navigate]);
+
+    }
+
+    // const makeRequest = async () => {
+    //     if (stripeToken) {
+    //         try {
+    //             const res = await userRequest.post("/stripe/payment", {
+    //                 tokenId: stripeToken.id,
+    //                 amount: (cart.total + shipping) * 100 ,
+    //             });
+    //             navigate('/', {
+    //                 stripeData: res.data,
+    //                 products: cart,
+    //             })
+    //         } catch { }
+    //     }
+    // };
+
 
     function getStepContent(step) {
         switch (step) {
@@ -175,7 +277,7 @@ const Checkout = () => {
             case 1:
                 return <PaymentForm payment={setpaymentMethod} />;
             case 2:
-                return <Review  details={details} payment={paymentMethod} />;
+                return <Review details={details} payment={paymentMethod} />;
             default:
                 throw new Error('Unknown step');
         }
@@ -193,6 +295,11 @@ const Checkout = () => {
         // if(activeStep === 2){
         //     console.log(details);
         // }
+        if(activeStep === steps.length - 1){
+            if(paymentMethod !== 'card')
+                checkOut();
+        }
+
         setActiveStep(activeStep + 1);
     };
 
@@ -242,7 +349,7 @@ const Checkout = () => {
                             token={onToken}
                             stripeKey={KEY}
                         >
-                            <Button variant="contained">CHECKOUT NOW</Button>
+                            {/* <Button variant="contained" onClick={makeRequest}>CHECKOUT NOW</Button> */}
                         </StripeCheckout>
                         : (
                             <React.Fragment>
@@ -250,10 +357,13 @@ const Checkout = () => {
                                     Thank you for your order.
                                 </Typography>
                                 <Typography variant="subtitle1">
-                                    Your order number is #2001539. We have emailed your order
+                                    Your order id is {orderId}. We have emailed your order
                                     confirmation, and will send you an update when your order has
                                     shipped.
                                 </Typography>
+                                <Box sx={{display:'flex', justifyContent: 'center', paddingTop:'20px'}}>
+                                <Button variant="contained" onClick={() =>(navigate('/')) }>Continue Shopping</Button>
+                                </Box>
                             </React.Fragment>
                         )} </> : (
                         <React.Fragment>
@@ -264,7 +374,25 @@ const Checkout = () => {
                                         Back
                                     </Button>
                                 )}
+                                {/* {activeStep === steps.length - 1 ? (
+                                    <Button
+                                        variant="contained"
+                                        onClick={checkOut}
+                                        sx={{ mt: 3, ml: 1 }}
+                                    >
+                                        Place order
+                                    </Button>) :
+                                    (
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleNext}
+                                            sx={{ mt: 3, ml: 1 }}
+                                        >
+                                            Next
+                                        </Button>
+                                    )
 
+                                } */}
                                 <Button
                                     variant="contained"
                                     onClick={handleNext}

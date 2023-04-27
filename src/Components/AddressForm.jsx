@@ -40,7 +40,7 @@ const AddressForm = ({details}) => {
             // userDetails['firstName'] = firstName;
             // userDetails['lastName'] = lastName;
             // console.log(userDetails);
-            console.log(detRef.current)
+            
             details(detRef.current);
             // details = detRef.current;
         }

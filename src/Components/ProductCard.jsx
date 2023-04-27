@@ -88,7 +88,7 @@ const ProductCard = ({ product }) => {
                     <ShoppingCartOutlinedIcon />
                 </Icon>
                 <Icon>
-                    <Link to={`/products/${product.id}`} style={{ color: 'inherit', textDecoration: 'inherit'}} >
+                    <Link to={`/products/${product._id}`} style={{ color: 'inherit', textDecoration: 'inherit'}} >
                     <SearchOutlinedIcon />
                     </Link>
                 </Icon>

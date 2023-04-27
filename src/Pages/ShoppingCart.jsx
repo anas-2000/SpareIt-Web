@@ -13,9 +13,8 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from "react-router";
-import { decreaseProduct, removeProduct } from '../Redux/cartRedux'
+import { decreaseProduct, increaseProduct, removeAllProducts, removeProduct } from '../Redux/cartRedux'
 import { useDispatch } from "react-redux";
-
 
 // const KEY = process.env.REACT_APP_STRIPE;
 
@@ -100,6 +99,12 @@ const ProductAmountContainer = styled.div`
   margin-bottom: 20px;
 `;
 
+const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const ProductAmount = styled.div`
   font-size: 24px;
   margin: 5px;
@@ -155,12 +160,15 @@ const theme = createTheme({
   },
 });
 
+
+
 const Cart = () => {
   const [subtotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const shipping = 1000;
   // const discount = 1000;
   const cart = useSelector((state) => state.cart);
+
   // const [stripeToken, setStripeToken] = useState(null);
 
   const navigate = useNavigate();
@@ -168,13 +176,24 @@ const Cart = () => {
 
   const removeFromCart = (product) => {
     dispatch(
-      removeProduct({...product})
+      removeProduct({ ...product })
     );
   };
 
   const decreaseItemQuantity = (product) => {
     dispatch(
-      decreaseProduct({...product})
+      decreaseProduct({ ...product })
+    );
+  };
+
+  const increaseItemQuantity = (product) => {
+    dispatch(
+      increaseProduct({ ...product })
+    );
+  };
+  const emptyCart = () => {
+    dispatch(
+      removeAllProducts()
     );
   };
 
@@ -182,7 +201,7 @@ const Cart = () => {
   // const onToken = (token) => {
   //   setStripeToken(token);
   // };
-  
+
 
   // useEffect(() => {
   //   function calculateTotal() {
@@ -205,6 +224,7 @@ const Cart = () => {
     navigate('/');
   };
 
+
   return (
 
     <ThemeProvider theme={theme}>
@@ -219,8 +239,11 @@ const Cart = () => {
               <TopText>Your Wishlist (0)</TopText>
             </TopTexts>
 
-            <Button variant="contained" onClick={checkOut}>CHECKOUT NOW</Button>
-            
+            <ButtonGroup>
+              <Button variant="contained" onClick={checkOut} sx={{marginRight:"20px"}}>CHECKOUT NOW</Button>
+              <Button onClick={emptyCart}>Empty Cart</Button>
+            </ButtonGroup>
+
             {/* moved to checkout */}
             {/* <StripeCheckout
                 name="SPAREIT"
@@ -236,7 +259,7 @@ const Cart = () => {
               </StripeCheckout> */}
 
 
-            
+
           </Top>
           <Bottom>
             <Info>
@@ -259,7 +282,7 @@ const Cart = () => {
                         {/* <Button variant="text"><Remove onClick={() => removeFromCart(product)} /></Button> */}
                         <Button variant="text"><Remove onClick={() => decreaseItemQuantity(product)} /></Button>
                         <ProductAmount>{product.quantity}</ProductAmount>
-                        <Button variant="text"><Add /></Button>
+                        <Button variant="text"><Add onClick={() => increaseItemQuantity(product)} /></Button>
                       </ProductAmountContainer>
                       <ProductPrice>Rs {product.price * product.quantity}</ProductPrice>
                     </PriceDetail>
@@ -267,6 +290,7 @@ const Cart = () => {
                   <Hr />
                 </Box>
               ))}
+
               {/* {cartItems.map((item) => (
                                 <Box>
                                     <Product>
@@ -341,7 +365,7 @@ const Cart = () => {
                 <Button>CHECKOUT NOW</Button>
               </StripeCheckout> */}
               <Button onClick={checkOut}>CHECKOUT NOW</Button>
-              
+
             </Summary>
           </Bottom>
         </Wrapper>

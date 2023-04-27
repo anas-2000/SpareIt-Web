@@ -14,6 +14,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { red, blue } from '@mui/material/colors';
 import Paper from '@mui/material/Paper';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { signup } from '../Redux/apiCalls';
+import styled from 'styled-components';
+
 
 
 function Copyright(props) {
@@ -40,14 +45,31 @@ const theme = createTheme({
     },
 });
 
+const Error = styled.span`
+color: red;
+`;
+
 export default function SignUp() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+    const { isFetching, error } = useSelector((state) => state.user);
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        const user = {
+            "username": username,
+            "password": password,
+            "isAdmin": false,
+        }
+        signup(dispatch, user);
+        console.log(user);
+        // const data = new FormData(event.currentTarget);
+        // console.log({
+        //     email: data.get('email'),
+        //     password: data.get('password'),
+        // });
     };
 
     return (
@@ -115,6 +137,7 @@ export default function SignUp() {
                                         label="Email Address"
                                         name="email"
                                         autoComplete="email"
+                                        onChange={(e) => setUsername(e.target.value)}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -126,6 +149,7 @@ export default function SignUp() {
                                         type="password"
                                         id="password"
                                         autoComplete="new-password"
+                                        onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -134,16 +158,18 @@ export default function SignUp() {
                                         label="I agree to the terms and condition."
                                     />
                                 </Grid>
+                                <div>{error && <Error>Error: Could not signup</Error>}</div>
                             </Grid>
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
+                                disabled={isFetching}
                             >
                                 Sign Up
                             </Button>
-                            <Typography>Other Options:</Typography>
+                            {/* <Typography>Other Options:</Typography>
                             <Button
                                 fullWidth
                                 variant="contained"
@@ -151,10 +177,10 @@ export default function SignUp() {
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 <GoogleIcon sx={{ marginRight: '10px' }} />Sign Up with Google
-                            </Button>
+                            </Button> */}
                             <Grid container justifyContent="flex-end">
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Link href="/login" variant="body2">
                                         Already have an account? Sign in
                                     </Link>
                                 </Grid>

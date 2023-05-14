@@ -14,7 +14,10 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { Box, ThemeProvider, createTheme } from '@mui/material';
+import { blue, red } from '@mui/material/colors';
 
 
 const Container = styled.div``;
@@ -58,6 +61,12 @@ const FilterText = styled.h3`
   margin-left: 20px;
 `;
 
+const Top = styled.div`
+  align-items: center;
+  padding: 20px;
+
+`
+
 // const Select = styled.select`
 //   padding: 10px;
 //   margin-right: 20px;
@@ -74,6 +83,17 @@ const MenuProps = {
     },
   },
 };
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: red[800],
+    },
+    secondary: {
+      main: blue[500],
+    }
+  },
+});
 
 
 
@@ -93,6 +113,7 @@ const ProductList = () => {
   const [selectedYear, setSelectedYear] = useState([]);
   const search = useLocation().search;
   const name = new URLSearchParams(search).get('name');
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   async function getMake() {
@@ -141,11 +162,21 @@ const ProductList = () => {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
+  const continueShopping = () => {
+    navigate('/');
+  };
 
   return (
+    <ThemeProvider theme={theme}> 
     <Container>
       <Navbar />
+      <Box sx={{display: 'flex', flexDirection: 'column'}}>
+      <Top>
+      {name !== "All" &&(<Button variant='contained'  onClick={continueShopping}><ArrowBackIosNewIcon /> Back to home</Button>)}
+      </Top>
       <Title>{name === "All" ? " ALL PRODUCTS " : " " + name.toUpperCase() + " "}</Title>
+      </Box>
+      
       <FilterContainer>
         <FilterText>FIND PARTS FOR YOUR CAR</FilterText>
         <Filter>
@@ -197,6 +228,7 @@ const ProductList = () => {
       <Products category={name} makes={selectedMake} years={selectedYear} />
       <Footer />
     </Container>
+    </ThemeProvider>
   )
 }
 

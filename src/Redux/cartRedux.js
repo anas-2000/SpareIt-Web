@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import localStorage from "redux-persist/es/storage";
+
+
+const localStorageKey = "cart";
 
 const cartSlice = createSlice({
     name: "cart",
@@ -11,7 +15,7 @@ const cartSlice = createSlice({
         addProduct: (state, action) => {
             state.quantity += 1;
             state.products.push(action.payload);
-            console.log(state.products);
+            // console.log(action.payload);
             state.total += action.payload.price * action.payload.quantity; // 1000 for shipping
         },
         removeProduct: (state, action) => {
@@ -45,6 +49,7 @@ const cartSlice = createSlice({
             state.total = 0;
         },
         emptyCart: (state) => {
+            localStorage.setItem(localStorageKey, JSON.stringify(state));
             return {
                 ...state,
                 products: [],

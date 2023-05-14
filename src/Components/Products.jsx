@@ -22,7 +22,7 @@ const Container = styled.div`
 `
 
 const Products = ({ category, makes, years }) => {
-  const items_per_page = 9;
+  const items_per_page = 20;
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastItem = currentPage * items_per_page;
   const indexOfFirstItem = indexOfLastItem - items_per_page;
@@ -60,14 +60,14 @@ const Products = ({ category, makes, years }) => {
       else {
         if (years.length === 0) {
           const filteredData = products.filter(item =>
-            item.vehicle.some(make => makes.includes(make))
+            item.vehicle.some(make => makes.includes(make)) || item.vehicle.length === 0
           );
           setFilteredProducts(filteredData);
         }
         else {
           const filteredData = products.filter(item =>
             item.vehicle.some(make => makes.includes(make)) &&
-            item.vehiclemodel.some(year => years.includes(year))
+            (item.vehiclemodel.some(year => years.includes(year)) || item.vehiclemodel.length === 0)
           );
           setFilteredProducts(filteredData);
         }

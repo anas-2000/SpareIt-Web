@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { emptyCart } from "./cartRedux";
+
+
 
 const userSlice = createSlice({
     name: "user",

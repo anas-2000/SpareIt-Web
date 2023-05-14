@@ -102,7 +102,7 @@ export const categories = [
     },
     {
         id: 10,
-        img: "https://www.eonon.co.uk/UserFiles/image/new_ga7202/eonon-vw-android-car-stereo.png",
+        img: "https://th.bing.com/th/id/OIP.XHcvAJL6yv_8K5I11Q49XwHaHa?w=183&h=183&c=7&r=0&o=5&dpr=1.3&pid=1.7",
         // img: "https://cdn-icons-png.flaticon.com/512/9464/9464298.png",
         //img: "https://images.pexels.com/photos/3738982/pexels-photo-3738982.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
         title: "Audio & Video"
@@ -117,7 +117,7 @@ export const categories = [
     },
     {
         id: 12,
-        img: "https://www.pngpix.com/wp-content/uploads/2016/04/Vintage-Table-Fan-PNG-image.png",
+        img: "https://th.bing.com/th/id/R.b95344cbb96527aa5967ac9dfce68af8?rik=9hSV%2fHoKc7zr%2bw&pid=ImgRaw&r=0",
         // img: "https://cdn-icons-png.flaticon.com/512/9300/9300930.png",
         //img: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.daraz.pk%2Fproducts%2Funiversal-black-car-fan-12v-360-degree-dual-head-dashboard-auto-cooling-air-fan-i352041513.html&psig=AOvVaw1wqdHdSH4ZkFCvMD50Ha3d&ust=1674247255859000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPjqtZm_1PwCFQAAAAAdAAAAABAJ",
         title: "Car Utilities"
@@ -127,13 +127,20 @@ export const categories = [
         img: "https://th.bing.com/th/id/R.b4745bab73c72779ffa3c622f629583d?rik=AkdojFUiHa92FQ&pid=ImgRaw&r=0",
         // img:"https://cdn-icons-png.flaticon.com/512/9353/9353102.png",
         //img: "https://m.media-amazon.com/images/I/61u5GU2hExL._AC_SY1000_.jpg",
-        title: "Car Decorations"
+        // title: "Car Decorations"
+        title: "Car Decoration"
     },
     {
         id: 14,
         img: "https://th.bing.com/th/id/OIP.eb4_uH8yYJYYYBRk9h96WwAAAA?pid=ImgDet&rs=1",
         // img: "https://img.icons8.com/nolan/512/D9E021/FB872B/catalitic-converter-warning.png",
         //img: "https://images.unsplash.com/photo-1572435759312-848041b1d659?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-        title: "Exhaust & Parts"
+        // title: "Exhaust & Parts"
+        title: "Exhaust and Parts"
+    },
+    {
+        id: 15,
+        img: "https://th.bing.com/th/id/OIP.h5BN_lxtLHTwIIV83q08mAHaFZ?w=241&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        title: "Bikes"
     }
 ];

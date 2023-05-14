@@ -30,9 +30,10 @@ const Container = styled.div`
     flex: 1;
     margin: 5px;
     //min-width: 280px;
-    min-width: 24%;
+    /* min-width: 24%; */
     max-width: 24%;
-    height: 350px; 
+    width: 24%; 
+    height: 300px; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,17 +84,16 @@ display: flex;
   justify-content: center;
 `;
 
-const ProductCard = ({ product }) => {
-
+const RelatedProductCard = ({ product }) => {
     return (
         <Container>
-            <Image src={product.img[0]} />
+            <Image src={JSON.parse(product.img)[0]} />
             <Info>
                 <Icon>
                     <ShoppingCartOutlinedIcon />
                 </Icon>
                 <Icon>
-                    <Link to={`/products/${product._id}`} style={{ color: 'inherit', textDecoration: 'inherit' }} >
+                    <Link to={`/products/${product.objectID}`} style={{ color: 'inherit', textDecoration: 'inherit' }} >
                         <SearchOutlinedIcon />
                     </Link>
                 </Icon>
@@ -111,4 +111,4 @@ const ProductCard = ({ product }) => {
     )
 }
 
-export default ProductCard
+export default RelatedProductCard

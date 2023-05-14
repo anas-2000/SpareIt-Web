@@ -182,7 +182,7 @@ const Checkout = () => {
                 try {
                     const res = await userRequest.post("/stripe/payment", {
                         tokenId: stripeToken.id,
-                        amount: (cart.total + shipping) * 100 ,
+                        amount: (cart.total + shipping) * 100,
                     });
                     checkOut();
                     setpaymentMethod('cod');
@@ -200,20 +200,24 @@ const Checkout = () => {
     }, [stripeToken])
 
     const checkOut = () => {
+        
         const addOrder = async () => {
             const prod = cart.products;
+            // console.log(prod);
             const productCount = prod.reduce((acc, product) => {
+                const { _id: _id, seller } = product;
                 if (product._id in acc) {  //change id to _id when connecting with database
-                    acc[product._id]++;
+                    acc[product._id].quantity++;
                 } else {
-                    acc[product._id] = 1;
+                    acc[product._id] = {quantity: 1, seller};
                 }
                 return acc;
             }, {});
 
             // const result = Object.entries(productCount).map(([id, count]) => ({ productID: id, quantity: count }));
-            const result = Object.entries(productCount).map(([id, count, sellerid]) => ({ product: id, quantity: count, seller: sellerid })); // add seller id to this
-            console.log(result);
+        //    console.log(productCount);
+            const result = Object.entries(productCount).map(([id, count]) => ({ product: id, quantity: count.quantity, seller: count.seller })); // add seller id to this
+            // console.log(result);
 
             const order = {
                 customer: user._id,
@@ -224,12 +228,52 @@ const Checkout = () => {
                 status: "approved",
             };
             try {
-                // console.log(userRequest);
-                // console.log(order);
                 const res = await userRequest.post("/orders", order);
                 setOrderId(res.data._id);
                 dispatch(emptyCart());
+                // postSellersRevenue(res.data._id);
+                const sellers = cart.products.reduce((acc, product) => {
+                    const { seller, price, quantity } = product;
+                    const totalAmount = price * quantity;
+                    if (acc[seller]) {
+                        // acc[seller] += totalAmount;
+                        acc[seller].amount += totalAmount;
+
+                    } else {
+                        // acc[seller] = totalAmount;
+                        acc[seller] = {amount: totalAmount, order: res.data._id}
+                        // acc[seller].orderId = orderid;
+                    
+                    // }
+                    // acc[seller].orderId = res.data._id;
+                    // console.log(acc);
+                    return acc;
+                    }
+                }, {});
+                    const result = Object.entries(sellers).map(([id, orderdet]) => ({ seller: id, order: orderdet.order, amount: orderdet.amount }));
+                    const res2 = await userRequest.post("/revenue", result);
             } catch { }
+        }
+
+        const postSellersRevenue = async (orderid) => {
+            const sellers = cart.products.reduce((acc, product) => {
+                const { seller, price, quantity } = product;
+                const totalAmount = price * quantity;
+
+                if (acc[seller]) {
+                    acc[seller] += totalAmount;
+                } else {
+                    acc[seller] = totalAmount;
+                    acc[seller].orderId = orderid;
+                
+                }
+                // acc[seller].orderId = orderid;
+                console.log(acc);
+                return acc;
+            }, {});
+            console.log(sellers);
+            const res = await userRequest.post("/revenue", sellers);
+            console.log(res);
         }
 
 
@@ -295,8 +339,8 @@ const Checkout = () => {
         // if(activeStep === 2){
         //     console.log(details);
         // }
-        if(activeStep === steps.length - 1){
-            if(paymentMethod !== 'card')
+        if (activeStep === steps.length - 1) {
+            if (paymentMethod !== 'card')
                 checkOut();
         }
 
@@ -361,8 +405,8 @@ const Checkout = () => {
                                     confirmation, and will send you an update when your order has
                                     shipped.
                                 </Typography>
-                                <Box sx={{display:'flex', justifyContent: 'center', paddingTop:'20px'}}>
-                                <Button variant="contained" onClick={() =>(navigate('/')) }>Continue Shopping</Button>
+                                <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
+                                    <Button variant="contained" onClick={() => (navigate('/'))}>Continue Shopping</Button>
                                 </Box>
                             </React.Fragment>
                         )} </> : (

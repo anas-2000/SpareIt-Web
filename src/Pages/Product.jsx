@@ -11,11 +11,26 @@ import { useState } from "react"
 import { mobile } from "../responsive"
 // import { products } from '../products'
 import Button from '@mui/material/Button';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { addProduct } from '../Redux/cartRedux'
-import { useDispatch } from "react-redux";
-import { publicRequest } from "../requestMethods";
+import { useDispatch, useSelector } from "react-redux";
+import { publicRequest, userRequest } from "../requestMethods";
+import Comments from '../Components/Comments'
+import { blue, red } from '@mui/material/colors';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Box, Typography } from '@mui/material'
 
+import RelatedProductCard from '../Components/RelatedProductCard'
+import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
+
+
+
+// for recommendations
+import { useRelatedProducts } from '@algolia/recommend-react';
+import { RelatedProducts } from '@algolia/recommend-react';
+import recommend from '@algolia/recommend';
+import '@algolia/ui-components-horizontal-slider-theme';
+import RelatedProduct from '../Components/RelatedProduct'
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -125,6 +140,39 @@ const StyledButton = styled.button`
 const Quantity = styled.div`
 `;
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: red[800],
+    },
+    secondary: {
+      main: blue[500],
+    }
+  },
+});
+
+const Top = styled.div`
+  align-items: center;
+  padding: 20px;
+`
+
+
+
+
+// for recommendations: related items
+
+const recommendClient = recommend('UA0B0CAN82', 'a15be29c0fcc61f2dd0ff51dc5877c71');
+const indexName = 'products';
+
+function RelatedItem({ item }) {
+  return (
+    <RelatedProductCard product = {item} />
+  );
+}
+
+
+
+
 const Product = () => {
   const [imageIndex, setImageIndex] = useState(0);
   const [leftarrowColor, setLeftArrowColor] = useState("red");
@@ -137,19 +185,38 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState([]);
+  const [userMessage, setUserMessage] = useState({});
+  const [rating, setRating] = useState(0);
+  const user = useSelector((state) => state.user.currentUser);
+  const navigate = useNavigate();
+
+
 
   useEffect(() => {
     const getProduct = async () => {
       try {
         const res = await publicRequest.get("/products/find/" + id);
         setProduct(res.data);
+        // getComments();
         setLoading(false);
       } catch { }
     };
     getProduct();
   }, [id]);
 
+  const getComments = async () => {
+    try {
+      const res = await publicRequest.get(`/comments?product=${product._id}`);
+      setComments(res.data);
 
+    }
+    catch (err) { }
+  }
+
+  useEffect(() => {
+    getComments();
+  })
 
   const addToCart = () => {
     // const cartproduct = {...product, quantity};
@@ -198,48 +265,100 @@ const Product = () => {
     }
   };
 
+  const submitComment = async () => {
+    if (!user) {
+      alert('You must be logged in to submit a review!');
+    }
+    else {
+      const review = {
+        rating: parseInt(rating),
+        comment: userMessage,
+        product: id
+      };
+      const res = await userRequest.post('/comments', review);
+      setComments(comments.concat(res.data));
+
+    }
+
+  };
+
+  const continueShopping = () => {
+    navigate('/');
+  };
 
   if (loading) {
     return <div>Loading...</div>
   }
   else {
     return (
-      <Container>
-        <Navbar />
-        <Wrapper>
-          <ImgContainer >
-            <Arrow direction="left" onClick={() => handleClick("left")} onMouseEnter={() => mouseEnter("left")}
-              onMouseLeave={() => mouseLeave("left")}>
-              <ArrowBackIosNewIcon sx={{ color: leftarrowColor }} />
-            </Arrow>
-            {/* {products[8].img.map((image) => (
+      <ThemeProvider theme={theme}>
+        <Container>
+          <Navbar />
+          <Top>
+          <Button variant='contained' onClick={continueShopping}><ArrowBackIosNewIcon /> CONTINUE SHOPPING</Button>
+          </Top>
+          <Wrapper>
+            <ImgContainer >
+              <Arrow direction="left" onClick={() => handleClick("left")} onMouseEnter={() => mouseEnter("left")}
+                onMouseLeave={() => mouseLeave("left")}>
+                <ArrowBackIosNewIcon sx={{ color: leftarrowColor }} />
+              </Arrow>
+              {/* {products[8].img.map((image) => (
                 <Image src = {image} />
             ))} */}
 
-            <Image src={product.img[imageIndex]} />
+              <Image src={product.img[imageIndex]} />
 
-            <Arrow direction="right" onClick={() => handleClick("right")} onMouseEnter={() => mouseEnter("right")}
-              onMouseLeave={() => mouseLeave("right")}>
-              <ArrowForwardIosIcon sx={{ color: rightarrowColor }} />
-            </Arrow>
-          </ImgContainer>
-          <InfoContainer>
-            <Title>{product.title}</Title>
-            <Desc>{product.desc}
-            </Desc>
-            <Price>Rs {product.price}</Price>
-            <AddContainer>
-              <AmountContainer>
-                <Button variant="text" onClick={() => handleQuantity("dec")} color='error'><RemoveIcon sx={{ color: "red" }} /></Button>
-                <Amount>{quantity}</Amount>
-                <Button variant="text" onClick={() => handleQuantity("inc")} color='error'><AddIcon sx={{ color: "red" }} /></Button>
-              </AmountContainer>
-              <StyledButton onClick={() => addToCart()}>ADD TO CART</StyledButton>
-            </AddContainer>
-          </InfoContainer>
-        </Wrapper>
-        <Footer />
-      </Container>
+              <Arrow direction="right" onClick={() => handleClick("right")} onMouseEnter={() => mouseEnter("right")}
+                onMouseLeave={() => mouseLeave("right")}>
+                <ArrowForwardIosIcon sx={{ color: rightarrowColor }} />
+              </Arrow>
+            </ImgContainer>
+            <InfoContainer>
+              <Title>{product.title}</Title>
+              <Desc>{product.desc}
+              </Desc>
+              <Price>Rs {product.price}</Price>
+              <AddContainer>
+                <AmountContainer>
+                  <Button variant="text" onClick={() => handleQuantity("dec")} color='error'><RemoveIcon sx={{ color: "red" }} /></Button>
+                  <Amount>{quantity}</Amount>
+                  <Button variant="text" onClick={() => handleQuantity("inc")} color='error'><AddIcon sx={{ color: "red" }} /></Button>
+                </AmountContainer>
+                <StyledButton onClick={() => addToCart()}>ADD TO CART</StyledButton>
+              </AddContainer>
+              <Comments comments={comments} setUserMessage={setUserMessage} setRating={setRating} />
+              <Button onClick={submitComment} variant='contained' sx={{ mt: 3, ml: 2, mb: 2 }}>Submit </Button>
+            </InfoContainer>
+          </Wrapper>
+          {/* <Box sx={{margin: '20px'}}>
+            <RelatedProduct product={product} />
+          </Box> */}
+            {/* <RelatedProducts
+              maxRecommendations={5}
+              recommendClient={recommendClient}
+              indexName={indexName}
+              objectIDs={[product._id]}
+              // itemComponent={(props) => (
+              //   <RelatedItem {...props} />
+              // )}
+              itemComponent={RelatedItem}
+              // queryParameters={{
+              //   facetFilters:[
+              //     `category:${product.category}`
+              //   ]
+              // }}
+              classNames={{
+                list: 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2',
+                title: 'invisible'
+              }}
+              // view={HorizontalSlider}
+              // itemComponent={RelatedProductCard}
+            /> */}
+            
+          <Footer />
+        </Container>
+      </ThemeProvider>
     )
   }
 }

@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { login } from '../Redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { addProduct } from '../Redux/cartRedux';
 
 
 function Copyright(props) {
@@ -58,6 +59,14 @@ const LogIn = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         login(dispatch, { username, password });
+        if(!error){
+          const storedCart = JSON.parse(localStorage.getItem("cart"));
+          if (storedCart && storedCart.products.length > 0) {
+            storedCart.products.forEach((product) => {
+                dispatch(addProduct(product));
+            });
+        }
+        }
         // const data = new FormData(event.currentTarget);
         // console.log({
         //   email: data.get('email'),

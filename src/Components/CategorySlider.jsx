@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 //height: 100%;
 //width: inherit;
 display: flex;
-transform: translateX(${props => props.startIndex * -20}vw);
+transform: translateX(${props => props.startIndex * -50}vw);
 ${mobile({ padding: "0px"})}
 //transition: all 1.5s ease;
 //transform: translateX(${props => props.slideIndex * -100}vw);
@@ -49,7 +49,7 @@ ${mobile({ padding: "0px"})}
 
 
 const CategorySlider = ({items}) => {
-  const num = 5; 
+  const num = 5;
   const [startIndex, setStartIndex] = useState(0); 
   const rem = items.length % num;
 

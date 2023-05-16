@@ -4,7 +4,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { Link } from 'react-router-dom';
-import { Rating, Typography } from '@mui/material';
+import { Rating} from '@mui/material';
 
 
 
@@ -14,7 +14,6 @@ const Info = styled.div`
     height: 100%;
     position: absolute;
     top: 0;
-    //top: 100;
     left: 0;
     z-index: 3;
     background-color: rgba(255, 0, 0, 0.5);
@@ -29,8 +28,6 @@ const Info = styled.div`
 const Container = styled.div`
     flex: 1;
     margin: 5px;
-    //min-width: 280px;
-    /* min-width: 24%; */
     max-width: 24%;
     width: 24%; 
     height: 300px; 

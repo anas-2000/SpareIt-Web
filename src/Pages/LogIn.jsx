@@ -13,7 +13,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { blue, red } from '@mui/material/colors';
-import GoogleIcon from '@mui/icons-material/Google';
 import { useState } from 'react';
 import { login } from '../Redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,30 +21,30 @@ import { addProduct } from '../Redux/cartRedux';
 
 
 function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-          SpareIT
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        SpareIT
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: red[800],
-      },
-      secondary:{
-        main: blue[500],
-      }
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: red[800],
     },
-  });
+    secondary: {
+      main: blue[500],
+    }
+  },
+});
 
-  const Error = styled.span`
+const Error = styled.span`
   color: red;
 `;
 
@@ -56,24 +55,19 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        login(dispatch, { username, password });
-        if(!error){
-          const storedCart = JSON.parse(localStorage.getItem("cart"));
-          if (storedCart && storedCart.products.length > 0) {
-            storedCart.products.forEach((product) => {
-                dispatch(addProduct(product));
-            });
-        }
-        }
-        // const data = new FormData(event.currentTarget);
-        // console.log({
-        //   email: data.get('email'),
-        //   password: data.get('password'),
-        // });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    login(dispatch, { username, password });
+    if (!error) {
+      const storedCart = JSON.parse(localStorage.getItem("cart"));
+      if (storedCart && storedCart.products.length > 0) {
+        storedCart.products.forEach((product) => {
+          dispatch(addProduct(product));
+        });
+      }
+    }
 
-      };
+  };
 
 
   return (
@@ -147,15 +141,6 @@ const LogIn = () => {
               >
                 Sign In
               </Button>
-              {/* <Typography>Other Options:</Typography>
-              <Button
-                fullWidth
-                variant="contained"
-                color='secondary'
-                sx={{ mt: 3, mb: 2 }}
-              >
-                <GoogleIcon sx={{marginRight:'10px'}} />Sign in with Google
-              </Button> */}
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
@@ -170,7 +155,7 @@ const LogIn = () => {
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
-            
+
           </Box>
         </Grid>
       </Grid>

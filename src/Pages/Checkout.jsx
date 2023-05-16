@@ -43,18 +43,7 @@ function Copyright() {
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-// function getStepContent(step) {
-//     switch (step) {
-//         case 0:
-//             return <AddressForm />;
-//         case 1:
-//             return <PaymentForm />;
-//         case 2:
-//             return <Review />;
-//         default:
-//             throw new Error('Unknown step');
-//     }
-// }
+
 
 const theme = createTheme({
     palette: {
@@ -73,39 +62,8 @@ const Checkout = () => {
     const dispatch = useDispatch();
     const [activeStep, setActiveStep] = React.useState(0);
     const [paymentMethod, setpaymentMethod] = useState('card');
-    const [details, setDetails] = useState({
-        // 'firstName':'',
-        // 'lastName': '',
-        // 'address1': '',
-        // 'address2': '',
-        // 'city': '',
-        // 'state': '',
-        // 'zip': '',
-        // 'country': '',
-    });
-    const userDetails = {};
-    // const details = {
-    //     'firstName':'',
-    //     'lastName': '',
-    //     'address1': '',
-    //     'address2': '',
-    //     'city': '',
-    //     'state': '',
-    //     'zip': '',
-    //     'country': '',
-    // };
-
-    // const [firstName, setFirstName] = useState('');
-    // const [lastName, setlastName] = useState('');
-    // const [address1, setaddress1] = useState('');
-    // const [address2, setaddress2] = useState('');
-    // const [city, setCity] = useState('');
-    // const [state, setstate] = useState('');
-    // const [zip, setzip] = useState('');
-    // const [country, setcountry] = useState('');
-
+    const [details, setDetails] = useState({});
     const [stripeToken, setStripeToken] = useState(null);
-    const [total, setTotal] = useState(0);
     const [shipping, setShipping] = useState(1000);
     const [custaddress, setAddress] = useState('');
     const cart = useSelector((state) => state.cart);
@@ -113,67 +71,11 @@ const Checkout = () => {
     const navigate = useNavigate();
     const [orderId, setOrderId] = useState();
 
-
-    // const setDetails = (key, value) => {
-    //     details[key] =  value;
-    // };
-
     const onToken = (token) => {
         setStripeToken(token);
     };
 
-    // useEffect(() => {
-    //     const addOrder = async () => {
-    //         const prod = cart.products;
-    //         const productCount = prod.reduce((acc, product) => {
-    //             if (product._id in acc) {  //change id to _id when connecting with database
-    //                 acc[product._id]++;
-    //             } else {
-    //                 acc[product._id] = 1;
-    //             }
-    //             return acc;
-    //         }, {});
 
-    //         // const result = Object.entries(productCount).map(([id, count]) => ({ productID: id, quantity: count }));
-    //         const result = Object.entries(productCount).map(([id, count]) => ({ product: id, quantity: count })); // add seller id to this
-
-    //         const order = {
-    //             customer: user._id,
-    //             products: result,
-    //             amount: cart.total + shipping,
-    //             address: custaddress,
-    //             status: "approved",
-    //         };
-    //         try {
-    //             const res = await userRequest.post("/orders", order);
-    //             console.log(res.body);
-    //             setOrderId(res.body._id);
-    //         } catch{}
-    //     }
-
-
-    //     const makeRequest = async () => {
-    //         try {
-    //             const res = await userRequest.post("/stripe/payment", {
-    //                 tokenId: stripeToken.id,
-    //                 amount: cart.total * 100,
-    //             });
-    //             navigate('/', {
-    //                 stripeData: res.data,
-    //                 products: cart,
-    //             })
-    //             // history.push("/", {
-    //             //     stripeData: res.data,
-    //             //     products: cart,
-    //             // });
-    //         } catch { }
-    //     };
-
-    //     stripeToken && addOrder();
-    //     // addOrder();
-    //     stripeToken && makeRequest();
-
-    // }, [stripeToken, cart, navigate]);
 
 
     useEffect(() => {
@@ -187,132 +89,60 @@ const Checkout = () => {
                     checkOut();
                     setpaymentMethod('cod');
                     setActiveStep(steps.length);
-                    // navigate('/', {
-                    //     stripeData: res.data,
-                    //     products: cart,
-                    // })
                 } catch { }
             }
         };
-
-        // stripeToken && checkOut();
         stripeToken && makeRequest();
     }, [stripeToken])
 
     const checkOut = () => {
-        
+
         const addOrder = async () => {
             const prod = cart.products;
-            // console.log(prod);
             const productCount = prod.reduce((acc, product) => {
                 const { _id: _id, seller } = product;
                 if (product._id in acc) {  //change id to _id when connecting with database
                     acc[product._id].quantity++;
                 } else {
-                    acc[product._id] = {quantity: 1, seller};
+                    acc[product._id] = { quantity: 1, seller };
                 }
                 return acc;
             }, {});
-
-            // const result = Object.entries(productCount).map(([id, count]) => ({ productID: id, quantity: count }));
-        //    console.log(productCount);
             const result = Object.entries(productCount).map(([id, count]) => ({ product: id, quantity: count.quantity, seller: count.seller })); // add seller id to this
-            // console.log(result);
 
             const order = {
                 customer: user._id,
-                // products: result,
                 items: result,
                 amount: cart.total + shipping,
                 address: custaddress,
                 status: "approved",
             };
             try {
+                console.log(user.accessToken);
+                console.log(order);
                 const res = await userRequest.post("/orders", order);
                 setOrderId(res.data._id);
                 dispatch(emptyCart());
-                // postSellersRevenue(res.data._id);
                 const sellers = cart.products.reduce((acc, product) => {
                     const { seller, price, quantity } = product;
                     const totalAmount = price * quantity;
                     if (acc[seller]) {
-                        // acc[seller] += totalAmount;
                         acc[seller].amount += totalAmount;
 
                     } else {
-                        // acc[seller] = totalAmount;
-                        acc[seller] = {amount: totalAmount, order: res.data._id}
-                        // acc[seller].orderId = orderid;
-                    
-                    // }
-                    // acc[seller].orderId = res.data._id;
-                    // console.log(acc);
-                    return acc;
+                        acc[seller] = { amount: totalAmount, order: res.data._id }
+                        return acc;
                     }
                 }, {});
-                    const result = Object.entries(sellers).map(([id, orderdet]) => ({ seller: id, order: orderdet.order, amount: orderdet.amount }));
-                    const res2 = await userRequest.post("/revenue", result);
+                const result = Object.entries(sellers).map(([id, orderdet]) => ({ seller: id, order: orderdet.order, amount: orderdet.amount }));
+                console.log(result);
+                const res2 = await userRequest.post("/revenue", result);
             } catch { }
         }
-
-        const postSellersRevenue = async (orderid) => {
-            const sellers = cart.products.reduce((acc, product) => {
-                const { seller, price, quantity } = product;
-                const totalAmount = price * quantity;
-
-                if (acc[seller]) {
-                    acc[seller] += totalAmount;
-                } else {
-                    acc[seller] = totalAmount;
-                    acc[seller].orderId = orderid;
-                
-                }
-                // acc[seller].orderId = orderid;
-                console.log(acc);
-                return acc;
-            }, {});
-            console.log(sellers);
-            const res = await userRequest.post("/revenue", sellers);
-            console.log(res);
-        }
-
-
-        // const makeRequest = async () => {
-        //     try {
-        //         const res = await userRequest.post("/stripe/payment", {
-        //             tokenId: stripeToken.id,
-        //             amount: cart.total * 100,
-        //         });
-        //         navigate('/', {
-        //             stripeData: res.data,
-        //             products: cart,
-        //         })
-        //     } catch { }
-        // };
-
         addOrder();
-        // if(stripeToken){
-        //     makeRequest();
-        // }
 
 
     }
-
-    // const makeRequest = async () => {
-    //     if (stripeToken) {
-    //         try {
-    //             const res = await userRequest.post("/stripe/payment", {
-    //                 tokenId: stripeToken.id,
-    //                 amount: (cart.total + shipping) * 100 ,
-    //             });
-    //             navigate('/', {
-    //                 stripeData: res.data,
-    //                 products: cart,
-    //             })
-    //         } catch { }
-    //     }
-    // };
-
 
     function getStepContent(step) {
         switch (step) {
@@ -328,17 +158,6 @@ const Checkout = () => {
     }
 
     const handleNext = () => {
-        // if(activeStep === 0){  
-        //     if(details['firstName'].length > 0 && details['lastName'].length > 0 && details['address1'].length > 0
-        //     && details['address2'].length > 0 && details['city'].length > 0 && details['zip'].length > 0
-        //     && details['country'].length > 0){
-        //         setActiveStep(activeStep + 1);        
-        //     }
-        //     return;
-        // }
-        // if(activeStep === 2){
-        //     console.log(details);
-        // }
         if (activeStep === steps.length - 1) {
             if (paymentMethod !== 'card')
                 checkOut();
@@ -385,7 +204,6 @@ const Checkout = () => {
                     {activeStep === steps.length ? <>{paymentMethod === 'card' ?
                         <StripeCheckout
                             name="SPAREIT"
-                            // image="https://avatars.githubusercontent.com/u/1486366?v=4"
                             billingAddress
                             shippingAddress
                             description={`Your total is Rs ${cart.total + shipping}`}
@@ -393,7 +211,6 @@ const Checkout = () => {
                             token={onToken}
                             stripeKey={KEY}
                         >
-                            {/* <Button variant="contained" onClick={makeRequest}>CHECKOUT NOW</Button> */}
                         </StripeCheckout>
                         : (
                             <React.Fragment>
@@ -418,25 +235,6 @@ const Checkout = () => {
                                         Back
                                     </Button>
                                 )}
-                                {/* {activeStep === steps.length - 1 ? (
-                                    <Button
-                                        variant="contained"
-                                        onClick={checkOut}
-                                        sx={{ mt: 3, ml: 1 }}
-                                    >
-                                        Place order
-                                    </Button>) :
-                                    (
-                                        <Button
-                                            variant="contained"
-                                            onClick={handleNext}
-                                            sx={{ mt: 3, ml: 1 }}
-                                        >
-                                            Next
-                                        </Button>
-                                    )
-
-                                } */}
                                 <Button
                                     variant="contained"
                                     onClick={handleNext}

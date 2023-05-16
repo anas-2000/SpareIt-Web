@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import Announcements from '../Components/Announcements';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Navbar';
 import Products from '../Components/Products';
-import { Options, FetchData } from '../Utils/FetchData';
 
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -53,8 +51,6 @@ const Filter = styled.div`
 `;
 
 const FilterText = styled.h3`
-  //font-size: 20px;
-  //margin: 20px;
   flex:1;
   font-weight: 500;
   margin-right: 20px;
@@ -65,13 +61,9 @@ const Top = styled.div`
   align-items: center;
   padding: 20px;
 
-`
+`;
 
-// const Select = styled.select`
-//   padding: 10px;
-//   margin-right: 20px;
-//   flex: 1;
-// `;
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -106,8 +98,6 @@ const ProductList = () => {
   const years = ["2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010",
     "2009", "2008", "2007", "2005", "2004", "2003", "2002", "2001", "2000"];
 
-  // const [makes, setMake] = useState([]);
-  // const [years, setYear] = useState([]);
 
   const [selectedMake, setSelectedMake] = useState([]);
   const [selectedYear, setSelectedYear] = useState([]);
@@ -115,31 +105,6 @@ const ProductList = () => {
   const name = new URLSearchParams(search).get('name');
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   async function getMake() {
-
-  //     //const yearData = await FetchData('https://car-data.p.rapidapi.com/cars/years', modelOptions);
-  //     //const makeData = await FetchData('https://car-data.p.rapidapi.com/cars/makes', modelOptions);
-
-  //     const makeData = await FetchData('https://car-api2.p.rapidapi.com/api/makes', Options);
-  //     //setMake(makeData.data);
-  //     setMake(makeData.data.map(({ id, name }) => name));
-  //   };
-
-  //   async function getYear() {
-  //     const yearData = await FetchData('https://car-api2.p.rapidapi.com/api/years', Options);
-
-  //     setYear(yearData);
-  //   }
-  //   if (makes.length === 0) {
-  //     getMake();
-  //   };
-  //   if (years.length === 0) {
-  //     getYear();
-  //   }
-
-
-  // }, []);
 
 
 
@@ -222,7 +187,6 @@ const ProductList = () => {
               ))}
             </Select>
           </FormControl>
-          {/* <FormControl sx={{ m: 1, width: 200 }}><Button variant="contained" color='error' size='large'>Find</Button></FormControl> */}
         </Filter>
       </FilterContainer>
       <Products category={name} makes={selectedMake} years={selectedYear} />
@@ -234,4 +198,3 @@ const ProductList = () => {
 
 export default ProductList
 
-// Keep objects that have specific attribute value in js object array?

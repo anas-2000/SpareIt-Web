@@ -11,13 +11,13 @@ const Container = styled.div`
     &:hover{
         transition: all 0.75s ease;
         transform: scale(1.2, 1.2);
-        //zoom: 1.1;
+        
     }
     background-color: white;
     outline: 1px solid #fff7f7;
-    //outline: 0.5px solid red;
-    //background-color: #8C1C3A;
-    //background-color: #6b1004;
+    
+    
+    
     
 `;
 const Image = styled.img`
@@ -27,11 +27,8 @@ const Image = styled.img`
     ${mobile({ height: "20vh" })}
 `;
 const Info = styled.div`
-/*     position: absolute;
-    top: 0;
-    left: 0; */
-/*     width: 100%;
-    height: 100%; */
+
+
     display: flex;
     align-items: center;
     justify-content: center;

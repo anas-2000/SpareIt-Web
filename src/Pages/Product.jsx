@@ -21,7 +21,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material'
 
 import RelatedProductCard from '../Components/RelatedProductCard'
-import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
+// import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 
 
 
@@ -29,7 +29,7 @@ import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react
 import { useRelatedProducts } from '@algolia/recommend-react';
 import { RelatedProducts } from '@algolia/recommend-react';
 import recommend from '@algolia/recommend';
-import '@algolia/ui-components-horizontal-slider-theme';
+// import '@algolia/ui-components-horizontal-slider-theme';
 import RelatedProduct from '../Components/RelatedProduct'
 
 const Container = styled.div``;
@@ -49,8 +49,8 @@ display:flex;
 align-items:center;
 justify-content: center;
 position: absolute;
-top: 0;
-bottom: 0;
+top: 45vh;
+/* bottom: 0; */
 margin: auto;
 cursor: pointer;
 //opacity: 0.5;
@@ -160,9 +160,9 @@ const Top = styled.div`
 
 
 // for recommendations: related items
-
-const recommendClient = recommend('UA0B0CAN82', 'a15be29c0fcc61f2dd0ff51dc5877c71');
-const indexName = 'products';
+// commented out for testing
+// const recommendClient = recommend('UA0B0CAN82', 'a15be29c0fcc61f2dd0ff51dc5877c71');
+// const indexName = 'products';
 
 function RelatedItem({ item }) {
   return (
@@ -188,7 +188,7 @@ const Product = () => {
   const [comments, setComments] = useState([]);
   const [userMessage, setUserMessage] = useState({});
   const [rating, setRating] = useState(0);
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.user.currentUser); // comment for testing
   const navigate = useNavigate();
 
 
@@ -331,30 +331,10 @@ const Product = () => {
               <Button onClick={submitComment} variant='contained' sx={{ mt: 3, ml: 2, mb: 2 }}>Submit </Button>
             </InfoContainer>
           </Wrapper>
-          {/* <Box sx={{margin: '20px'}}>
+          {/* commented out for testing */}
+          <Box sx={{margin: '20px'}}>
             <RelatedProduct product={product} />
-          </Box> */}
-            {/* <RelatedProducts
-              maxRecommendations={5}
-              recommendClient={recommendClient}
-              indexName={indexName}
-              objectIDs={[product._id]}
-              // itemComponent={(props) => (
-              //   <RelatedItem {...props} />
-              // )}
-              itemComponent={RelatedItem}
-              // queryParameters={{
-              //   facetFilters:[
-              //     `category:${product.category}`
-              //   ]
-              // }}
-              classNames={{
-                list: 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2',
-                title: 'invisible'
-              }}
-              // view={HorizontalSlider}
-              // itemComponent={RelatedProductCard}
-            /> */}
+          </Box>
             
           <Footer />
         </Container>

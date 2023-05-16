@@ -8,8 +8,6 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { mobile } from "../responsive";
 
 const Container = styled.div`
-    //display: flex;
-    //padding: 20px;
     border: 1px solid lightgray;
     border-radius: 5px;
     position: relative;

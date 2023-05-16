@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { red, blue } from '@mui/material/colors';
 import Paper from '@mui/material/Paper';
-import GoogleIcon from '@mui/icons-material/Google';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { signup } from '../Redux/apiCalls';
@@ -64,12 +63,6 @@ export default function SignUp() {
             "isAdmin": false,
         }
         signup(dispatch, user);
-        console.log(user);
-        // const data = new FormData(event.currentTarget);
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // });
     };
 
     return (
@@ -169,15 +162,6 @@ export default function SignUp() {
                             >
                                 Sign Up
                             </Button>
-                            {/* <Typography>Other Options:</Typography>
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                color='secondary'
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                <GoogleIcon sx={{ marginRight: '10px' }} />Sign Up with Google
-                            </Button> */}
                             <Grid container justifyContent="flex-end">
                                 <Grid item>
                                     <Link href="/login" variant="body2">

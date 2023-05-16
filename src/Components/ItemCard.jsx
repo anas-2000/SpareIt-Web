@@ -1,13 +1,9 @@
 import React from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
+import { Rating } from '@mui/material';
 
 const Container = styled.div`
-    //flex:1; 
-    //margin: 20px;
-    /* margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    margin-top: 0px; */
     height: 90vh;
     position: relative;
     background-color: white;
@@ -45,16 +41,28 @@ const Price = styled.h4`
   position: relative;
 `;
 
+const RatingDiv = styled.div`
+display: flex;
+  justify-content: center;
+`;
 
-const ItemCard = ({item}) => {
+
+const ItemCard = ({ item }) => {
+
   return (
-    <Container>
-      <Image src = {item.img[0]} />
-      <Info>
-        <Title>{item.title}</Title>
-        <Price>Rs {item.price}</Price>
-      </Info>
-    </Container>
+    <Link to={`/products/${item.id}`} style={{ textDecorationLine: 'none', color: 'inherit' }}>
+
+      <Container>
+        <Image src={item.img[0]} />
+        <Info>
+          <Title>{item.title}</Title>
+          <RatingDiv>
+            <Rating name="read-only" value={item.rating} readOnly />
+          </RatingDiv>
+          <Price>Rs {item.price}</Price>
+        </Info>
+      </Container>
+    </Link>
   )
 }
 

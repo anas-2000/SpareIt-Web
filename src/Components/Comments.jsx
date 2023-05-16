@@ -3,10 +3,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { Box, Button, Rating, TextField } from '@mui/material';
+import { Box, Rating, TextField } from '@mui/material';
 import { useState } from 'react';
 import { blue, red } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -31,9 +29,6 @@ const theme = createTheme({
 
 
 const Comments = ({ comments, setUserMessage, setRating }) => {
-
-    // const [message, setMessage] = useState('');
-    // const [rating, setRating] = useState(0);
     const maxIndex = comments.length;
     const currentIndex = 4;
     const [renderComments, setRenderComments] = useState(comments.length > 8 ? comments.slice(0, 8): comments.slice(0, comments.length - 1));
@@ -116,11 +111,7 @@ const Comments = ({ comments, setUserMessage, setRating }) => {
                     <Typography sx={{ ml: 2 }} variant='h5' color='primary'>LEAVE A REVIEW</Typography>
                     <Rating
                         name="simple-controlled"
-                        // value={rating}
                         sx={{ mt: 2, ml: 2, flex: 1 }}
-                        // onChange={(event, newValue) => {
-                        //     setRating(newValue);
-                        // }}
                         onChange={handleRating}
                     />
                     <TextField
@@ -133,13 +124,6 @@ const Comments = ({ comments, setUserMessage, setRating }) => {
                         placeholder='Your comment'
                         onChange={(e) => setUserMessage(e.target.value)}
                     />
-                    {/* <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ mt: 3, ml: 2, mb: 2, flex: 1, width: '20%' }}
-                    >
-                        Submit
-                    </Button> */}
                 </Box>
             </ThemeProvider>
         </>

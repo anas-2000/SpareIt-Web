@@ -150,7 +150,7 @@ export const products = [
 
 export const deals = [
     {
-        id: 2,
+        id: '642dcad10f5c33b50a450bb2',
         category: "Car Care",
         subcategory: "Coolants",
         manufacturer: "Cyclo",
@@ -163,7 +163,7 @@ export const deals = [
         img: ["https://cache2.pakwheels.com/ad_pictures/3642/cyclo-coolant-booster-1-litre-36429874.jpg"]
     },
     {
-        id: 3,
+        id: '642dcad10f5c33b50a450bb3',
         category: "Interior",
         subcategory: "Back & Neck Care",
         manufacturer: "WMS",
@@ -183,7 +183,7 @@ export const deals = [
 
 export const recommendedProducts = [
     {
-        id: 0,
+        id: '642dcad10f5c33b50a450bb0',
         category: "Engine & Mechanical",
         subcategory: "Suspension",
         manufacturer: "Honda",
@@ -198,24 +198,23 @@ export const recommendedProducts = [
 
     },
     {
-        id: 1,
-        category: "Brakes",
-        subcategory: "Brake Pads",
-        manufacturer: "Akebono",
-        vehicle: "Suzuki Wagon R Japanese",
+        id: '642dcad10f5c33b50a450bb8',
+        category: "Tyres & Wheels",
+        manufacturer: "Nexen",
+        vehicle: [],
         vehiclemodel: [],
-        title: "Suzuki Wagon R Japanese Akebono Front Brake Pad",
-        desc: "",
+        title: "Nexen Tire Roadian HP 285/60R18",
+        desc: "This model offers a longer lasting tread life. The tire's tread wear rate is slowed down as the footprint maintains constant contact with the road and evenly distributes the driving pressure along the tread area. The constant contact equally spreads the force of acceleration, cornering and braking out across the tire’s surface and prevents irregular wear on the tire, extending its life.",
         rating: 4,
-        price: 5700,
+        price: 55500,
         featured: true,
-        img: ["https://cache2.pakwheels.com/ad_pictures/5460/suzuki-wagon-r-japanese-akebono-front-brake-pad-54607451.jpg"]
+        img: ["https://cache2.pakwheels.com/ad_pictures/5598/nexen-tire-roadian-hp-285-60r18-55986890.jpg"]
     }
 ];
 
 export const featuredProducts = [
     {
-        id: 0,
+        id: '642dcad10f5c33b50a450bb0',
         category: "Engine & Mechanical",
         subcategory: "Suspension",
         manufacturer: "Honda",
@@ -230,18 +229,17 @@ export const featuredProducts = [
 
     },
     {
-        id: 1,
-        category: "Brakes",
-        subcategory: "Brake Pads",
-        manufacturer: "Akebono",
-        vehicle: "Suzuki Wagon R Japanese",
+        id: '642dcad10f5c33b50a450bb8',
+        category: "Tyres & Wheels",
+        manufacturer: "Nexen",
+        vehicle: [],
         vehiclemodel: [],
-        title: "Suzuki Wagon R Japanese Akebono Front Brake Pad",
-        desc: "",
+        title: "Nexen Tire Roadian HP 285/60R18",
+        desc: "This model offers a longer lasting tread life. The tire's tread wear rate is slowed down as the footprint maintains constant contact with the road and evenly distributes the driving pressure along the tread area. The constant contact equally spreads the force of acceleration, cornering and braking out across the tire’s surface and prevents irregular wear on the tire, extending its life.",
         rating: 4,
-        price: 5700,
+        price: 55500,
         featured: true,
-        img: ["https://cache2.pakwheels.com/ad_pictures/5460/suzuki-wagon-r-japanese-akebono-front-brake-pad-54607451.jpg"]
+        img: ["https://cache2.pakwheels.com/ad_pictures/5598/nexen-tire-roadian-hp-285-60r18-55986890.jpg"]
     }
 ];
 

@@ -6,6 +6,12 @@ import App from './App';
 import { Provider } from 'react-redux/es';
 import { store, persistor } from "./Redux/store";
 import { PersistGate } from 'redux-persist/integration/react'
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+
+if(process.env.NODE_ENV === 'production'){
+  disableReactDevTools();
+}
 
 ReactDOM.render(
   // <React.StrictMode>

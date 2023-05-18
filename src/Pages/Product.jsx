@@ -19,7 +19,7 @@ import Comments from '../Components/Comments'
 import { blue, red } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material'
-
+import RelatedProduct from '../Components/RelatedProduct'
 import RelatedProductCard from '../Components/RelatedProductCard'
 // import { HorizontalSlider } from '@algolia/ui-components-horizontal-slider-react';
 
@@ -30,7 +30,7 @@ import RelatedProductCard from '../Components/RelatedProductCard'
 // import { RelatedProducts } from '@algolia/recommend-react';
 // import recommend from '@algolia/recommend';
 // // import '@algolia/ui-components-horizontal-slider-theme';
-// import RelatedProduct from '../Components/RelatedProduct'
+
 
 const Container = styled.div``;
 const Wrapper = styled.div`

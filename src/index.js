@@ -9,9 +9,8 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
 
-if(process.env.NODE_ENV === 'production'){
-  disableReactDevTools();
-}
+if(process.env.NODE_ENV === 'production')disableReactDevTools()
+
 
 ReactDOM.render(
   // <React.StrictMode>

@@ -34,10 +34,15 @@ const Products = ({ category, makes, years }) => {
       try {
         const res = await axios.get(
           category === "All" ?
-            "http://localhost:3000/api/products" :
-            `http://localhost:3000/api/products?category=${category.replace(/&/g, '%26')}`
+            `${process.env.API_URL}products` :
+            `${process.env.API_URL}products?category=${category.replace(/&/g, '%26')}`
 
         );
+        //   category === "All" ?
+        //     "http://localhost:3000/api/products" :
+        //     `http://localhost:3000/api/products?category=${category.replace(/&/g, '%26')}`
+
+        // );
         setProducts(res.data);
         setFetching(false);
       } catch (err) { }

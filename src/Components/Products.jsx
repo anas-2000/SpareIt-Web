@@ -34,8 +34,8 @@ const Products = ({ category, makes, years }) => {
       try {
         const res = await axios.get(
           category === "All" ?
-            `${process.env.API_URL}products` :
-            `${process.env.API_URL}products?category=${category.replace(/&/g, '%26')}`
+            `${process.env.API_URL}/products` :
+            `${process.env.API_URL}/products?category=${category.replace(/&/g, '%26')}`
 
         );
         //   category === "All" ?

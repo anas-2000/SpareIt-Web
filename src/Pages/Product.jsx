@@ -26,11 +26,11 @@ import RelatedProductCard from '../Components/RelatedProductCard'
 
 
 // for recommendations
-import { useRelatedProducts } from '@algolia/recommend-react';
-import { RelatedProducts } from '@algolia/recommend-react';
-import recommend from '@algolia/recommend';
-// import '@algolia/ui-components-horizontal-slider-theme';
-import RelatedProduct from '../Components/RelatedProduct'
+// import { useRelatedProducts } from '@algolia/recommend-react';
+// import { RelatedProducts } from '@algolia/recommend-react';
+// import recommend from '@algolia/recommend';
+// // import '@algolia/ui-components-horizontal-slider-theme';
+// import RelatedProduct from '../Components/RelatedProduct'
 
 const Container = styled.div``;
 const Wrapper = styled.div`
